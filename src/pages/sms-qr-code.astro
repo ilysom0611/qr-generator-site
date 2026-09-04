@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqItems = [
+  { question: 'How do I scan an SMS QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to open your SMS app with the recipient and body pre-filled.' },
+  { question: 'Can I pre-fill the message body?', answer: 'Yes. Enter a recipient number and a message. Both are encoded in the QR code.' },
+  { question: 'Will the SMS send automatically?', answer: 'No. Scanning opens a draft SMS. The user must tap send.' },
+  { question: 'Does this work without a SIM?', answer: 'Yes for encoding. Scanning requires a phone with SMS capability to send the message.' }
+];
+
+const relatedTypes = [
+  { slug: 'url-qr-code', label: 'URL QR Code' },
+  { slug: 'wifi-qr-code', label: 'WiFi QR Code' },
+  { slug: 'vcard-qr-code', label: 'vCard QR Code' },
+  { slug: 'email-qr-code', label: 'Email QR Code' },
+  { slug: 'phone-qr-code', label: 'Phone QR Code' },
+  { slug: 'location-qr-code', label: 'Location QR Code' },
+  { slug: 'text-qr-code', label: 'Text QR Code' },
+  { slug: 'qr-code-generator', label: 'All QR Code Tools' }
+];
+---
+<Base
+  title="Free SMS QR Code Generator — Pre-fill Texts"
+  description="Create an SMS QR code with pre-filled recipient and body. Scanners open their SMS app ready to send. 100% private."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <section class="landing-hero">
+    <div class="container">
+      <h1>Free SMS QR Code Generator</h1>
+      <p>Generate a QR code that opens a pre-filled text message. Great for opt-in keywords, feedback, and support lines.</p>
+      <a href="/#type=sms" class="cta">Try the SMS QR Code Generator</a>
+    </div>
+  </section>
+  <section class="landing-howto">
+    <div class="container">
+      <h2>How to use</h2>
+      <ol>
+        <li>Select SMS type and enter the recipient phone number.</li>
+        <li>Optionally add a message body.</li>
+        <li>Download the QR code. Print or share it.</li>
+      </ol>
+    </div>
+  </section>
+  <section class="landing-faq">
+    <div class="container">
+      <h2>Frequently asked questions</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <section class="landing-related">
+    <div class="container">
+      <h2>Related tools</h2>
+      <ul>
+        {relatedTypes.map((r) => (
+          <li><a href={`/${r.slug}`}>{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

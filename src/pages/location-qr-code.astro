@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqItems = [
+  { question: 'How do I scan a Location QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to open the location in your maps app.' },
+  { question: 'Which maps apps are supported?', answer: 'The encoded geo: URI opens Google Maps on Android and Apple Maps on iOS by default. Other apps can register handlers.' },
+  { question: 'How precise are the coordinates?', answer: 'Up to 6 decimal places. That gives roughly 0.1 m precision, well below what consumer GPS reports.' },
+  { question: 'Can I share a place by name instead of coordinates?', answer: 'No. The QR code stores latitude and longitude only. Use a URL QR code with a Google Maps link if you need a named place.' }
+];
+
+const relatedTypes = [
+  { slug: 'url-qr-code', label: 'URL QR Code' },
+  { slug: 'wifi-qr-code', label: 'WiFi QR Code' },
+  { slug: 'vcard-qr-code', label: 'vCard QR Code' },
+  { slug: 'email-qr-code', label: 'Email QR Code' },
+  { slug: 'phone-qr-code', label: 'Phone QR Code' },
+  { slug: 'sms-qr-code', label: 'SMS QR Code' },
+  { slug: 'text-qr-code', label: 'Text QR Code' },
+  { slug: 'qr-code-generator', label: 'All QR Code Tools' }
+];
+---
+<Base
+  title="Free Location QR Code Generator — Open in Maps"
+  description="Create a Location QR code with latitude and longitude. Scanners open the spot in their maps app. 100% private, browser-based."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <section class="landing-hero">
+    <div class="container">
+      <h1>Free Location QR Code Generator</h1>
+      <p>Share a GPS location with a scan. Recipients open the spot in their favorite maps app — no typing.</p>
+      <a href="/#type=location" class="cta">Try the Location QR Code Generator</a>
+    </div>
+  </section>
+  <section class="landing-howto">
+    <div class="container">
+      <h2>How to use</h2>
+      <ol>
+        <li>Select Location type and enter latitude and longitude.</li>
+        <li>Optionally pick up the coordinates from a map link.</li>
+        <li>Download and print the QR code. Visitors scan to navigate.</li>
+      </ol>
+    </div>
+  </section>
+  <section class="landing-faq">
+    <div class="container">
+      <h2>Frequently asked questions</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <section class="landing-related">
+    <div class="container">
+      <h2>Related tools</h2>
+      <ul>
+        {relatedTypes.map((r) => (
+          <li><a href={`/${r.slug}`}>{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

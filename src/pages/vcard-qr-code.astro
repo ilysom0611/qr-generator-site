@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqItems = [
+  { question: 'How do I scan a vCard QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to add the contact to your address book.' },
+  { question: 'Which fields can I include?', answer: 'First name, last name, phone, email, organization, title, website, and address are supported.' },
+  { question: 'Does this work with both iPhone and Android?', answer: 'Yes. iOS and modern Android add vCard QR codes to the system contacts app natively.' },
+  { question: 'Can I update the contact after sharing?', answer: 'No. The QR code encodes a snapshot. Re-generate and re-share to update.' }
+];
+
+const relatedTypes = [
+  { slug: 'url-qr-code', label: 'URL QR Code' },
+  { slug: 'wifi-qr-code', label: 'WiFi QR Code' },
+  { slug: 'qr-code-generator', label: 'All QR Code Tools' },
+  { slug: 'email-qr-code', label: 'Email QR Code' },
+  { slug: 'phone-qr-code', label: 'Phone QR Code' },
+  { slug: 'sms-qr-code', label: 'SMS QR Code' },
+  { slug: 'location-qr-code', label: 'Location QR Code' },
+  { slug: 'text-qr-code', label: 'Text QR Code' }
+];
+---
+<Base
+  title="Free vCard QR Code Generator — Share Contacts Instantly"
+  description="Create a vCard QR code for business cards or events. Recipients scan to save your contact. 100% private, browser-based."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <section class="landing-hero">
+    <div class="container">
+      <h1>Free vCard QR Code Generator</h1>
+      <p>Share your business card with a scan. Recipients save your contact instantly — no typing.</p>
+      <a href="/#type=vcard" class="cta">Try the vCard QR Code Generator</a>
+    </div>
+  </section>
+  <section class="landing-howto">
+    <div class="container">
+      <h2>How to use</h2>
+      <ol>
+        <li>Select vCard type and fill in your contact details.</li>
+        <li>Optionally add organization, title, website, or address.</li>
+        <li>Download the QR code. Print it on business cards, name badges, or email signatures.</li>
+      </ol>
+    </div>
+  </section>
+  <section class="landing-faq">
+    <div class="container">
+      <h2>Frequently asked questions</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <section class="landing-related">
+    <div class="container">
+      <h2>Related tools</h2>
+      <ul>
+        {relatedTypes.map((r) => (
+          <li><a href={`/${r.slug}`}>{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqItems = [
+  { question: 'How do I scan a QR code?', answer: 'Open your phone camera app and point it at the QR code. A notification will appear with the link. Tap to open.' },
+  { question: 'Is this QR code generator really free?', answer: 'Yes, completely free with no signup, no watermark, and no limits on the number of QR codes you generate.' },
+  { question: 'Do you store my URLs?', answer: 'No. All generation happens in your browser. Your URL never leaves your device.' },
+  { question: 'What size should I print the QR code?', answer: "For URLs, we recommend at least 2x2 cm (0.8x0.8 inches) for reliable scanning at arm's length." }
+];
+
+const relatedTypes = [
+  { slug: 'wifi-qr-code', label: 'WiFi QR Code' },
+  { slug: 'vcard-qr-code', label: 'vCard QR Code' },
+  { slug: 'email-qr-code', label: 'Email QR Code' },
+  { slug: 'phone-qr-code', label: 'Phone QR Code' },
+  { slug: 'sms-qr-code', label: 'SMS QR Code' },
+  { slug: 'location-qr-code', label: 'Location QR Code' },
+  { slug: 'text-qr-code', label: 'Text QR Code' },
+  { slug: 'qr-code-generator', label: 'All QR Code Tools' }
+];
+---
+<Base
+  title="Free URL QR Code Generator — No Upload, No Signup"
+  description="Convert any URL to a QR code instantly. 100% private, browser-based. No upload, no signup, free for unlimited use."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <section class="landing-hero">
+    <div class="container">
+      <h1>Free URL QR Code Generator</h1>
+      <p>Convert any link into a scannable QR code. Perfect for menus, business cards, flyers, and product packaging.</p>
+      <a href="/#type=url" class="cta">Try the URL QR Code Generator</a>
+    </div>
+  </section>
+
+  <section class="landing-howto">
+    <div class="container">
+      <h2>How to use</h2>
+      <ol>
+        <li>Paste your URL above (e.g. <code>https://example.com</code>).</li>
+        <li>Customize colors, add a Logo, or pick an error correction level.</li>
+        <li>Download as PNG, SVG, or JPG. Print or share.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="landing-faq">
+    <div class="container">
+      <h2>Frequently asked questions</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="landing-related">
+    <div class="container">
+      <h2>Related tools</h2>
+      <ul>
+        {relatedTypes.map((r) => (
+          <li><a href={`/${r.slug}`}>{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqItems = [
+  { question: 'How do I scan an Email QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to open your mail app with the recipient, subject, and body pre-filled.' },
+  { question: 'Can I pre-fill the subject and body?', answer: 'Yes. Enter a recipient email, subject, and message. All three are encoded in the QR code.' },
+  { question: 'Does the QR code send the email automatically?', answer: 'No. Scanning opens a draft email. The user must tap send.' },
+  { question: 'Is the recipient address private?', answer: 'No. Anyone who scans the QR can see the address. Use a public-facing mailbox for this.' }
+];
+
+const relatedTypes = [
+  { slug: 'url-qr-code', label: 'URL QR Code' },
+  { slug: 'wifi-qr-code', label: 'WiFi QR Code' },
+  { slug: 'vcard-qr-code', label: 'vCard QR Code' },
+  { slug: 'phone-qr-code', label: 'Phone QR Code' },
+  { slug: 'sms-qr-code', label: 'SMS QR Code' },
+  { slug: 'location-qr-code', label: 'Location QR Code' },
+  { slug: 'text-qr-code', label: 'Text QR Code' },
+  { slug: 'qr-code-generator', label: 'All QR Code Tools' }
+];
+---
+<Base
+  title="Free Email QR Code Generator — Pre-fill Subject and Body"
+  description="Create an Email QR code with pre-filled recipient, subject, and body. Scanners open their mail app ready to send. 100% private."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <section class="landing-hero">
+    <div class="container">
+      <h1>Free Email QR Code Generator</h1>
+      <p>Generate a QR code that opens a pre-filled email. Great for feedback forms, contact requests, and support.</p>
+      <a href="/#type=email" class="cta">Try the Email QR Code Generator</a>
+    </div>
+  </section>
+  <section class="landing-howto">
+    <div class="container">
+      <h2>How to use</h2>
+      <ol>
+        <li>Select Email type and enter the recipient address.</li>
+        <li>Optionally add a subject and message body.</li>
+        <li>Download the QR code. Print or share it.</li>
+      </ol>
+    </div>
+  </section>
+  <section class="landing-faq">
+    <div class="container">
+      <h2>Frequently asked questions</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <section class="landing-related">
+    <div class="container">
+      <h2>Related tools</h2>
+      <ul>
+        {relatedTypes.map((r) => (
+          <li><a href={`/${r.slug}`}>{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

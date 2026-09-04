@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqItems = [
+  { question: 'How do I scan a Phone QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to start a call to the encoded number.' },
+  { question: 'Will my phone dial automatically?', answer: 'No. Scanning opens the dialer with the number pre-filled. The user must tap call.' },
+  { question: 'Can I include a country code?', answer: 'Yes. Enter the full international format (e.g. +1 555 123 4567) for best results.' },
+  { question: 'Does this work internationally?', answer: 'Yes. The QR code just stores the digits. Caller ID and rates depend on the user phone plan.' }
+];
+
+const relatedTypes = [
+  { slug: 'url-qr-code', label: 'URL QR Code' },
+  { slug: 'wifi-qr-code', label: 'WiFi QR Code' },
+  { slug: 'vcard-qr-code', label: 'vCard QR Code' },
+  { slug: 'email-qr-code', label: 'Email QR Code' },
+  { slug: 'sms-qr-code', label: 'SMS QR Code' },
+  { slug: 'location-qr-code', label: 'Location QR Code' },
+  { slug: 'text-qr-code', label: 'Text QR Code' },
+  { slug: 'qr-code-generator', label: 'All QR Code Tools' }
+];
+---
+<Base
+  title="Free Phone QR Code Generator — Tap to Call"
+  description="Create a Phone QR code that opens the dialer with a number pre-filled. Perfect for signs, business cards, and flyers. 100% private."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <section class="landing-hero">
+    <div class="container">
+      <h1>Free Phone QR Code Generator</h1>
+      <p>Generate a QR code that opens the dialer pre-filled with your number. Great for storefronts, ads, and contact cards.</p>
+      <a href="/#type=phone" class="cta">Try the Phone QR Code Generator</a>
+    </div>
+  </section>
+  <section class="landing-howto">
+    <div class="container">
+      <h2>How to use</h2>
+      <ol>
+        <li>Select Phone type and enter the phone number.</li>
+        <li>Optionally include a country code.</li>
+        <li>Download and place the QR code on your sign, ad, or card.</li>
+      </ol>
+    </div>
+  </section>
+  <section class="landing-faq">
+    <div class="container">
+      <h2>Frequently asked questions</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <section class="landing-related">
+    <div class="container">
+      <h2>Related tools</h2>
+      <ul>
+        {relatedTypes.map((r) => (
+          <li><a href={`/${r.slug}`}>{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

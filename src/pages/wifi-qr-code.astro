@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqItems = [
+  { question: 'How do I scan a WiFi QR code?', answer: 'Open your phone camera, point at the QR. Tap the WiFi prompt to auto-connect.' },
+  { question: 'Is the password embedded in the QR code?', answer: 'Yes — anyone who scans it can join your network. Only use this for guest networks you intend to share.' },
+  { question: 'Does this work on iPhone and Android?', answer: 'Yes. iOS 11+ and Android 10+ support WiFi QR codes natively.' },
+  { question: 'Can I make it for a hidden network?', answer: 'Yes. Toggle the "Hidden network" option after selecting WiFi type.' }
+];
+
+const relatedTypes = [
+  { slug: 'url-qr-code', label: 'URL QR Code' },
+  { slug: 'vcard-qr-code', label: 'vCard QR Code' },
+  { slug: 'qr-code-generator', label: 'All QR Code Tools' },
+  { slug: 'email-qr-code', label: 'Email QR Code' },
+  { slug: 'phone-qr-code', label: 'Phone QR Code' },
+  { slug: 'sms-qr-code', label: 'SMS QR Code' },
+  { slug: 'location-qr-code', label: 'Location QR Code' },
+  { slug: 'text-qr-code', label: 'Text QR Code' }
+];
+---
+<Base
+  title="Free WiFi QR Code Generator — Share WiFi Instantly"
+  description="Create a QR code for your WiFi network. Guests scan and connect — no typing passwords. 100% private, browser-based."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <section class="landing-hero">
+    <div class="container">
+      <h1>Free WiFi QR Code Generator</h1>
+      <p>Share your WiFi network with a scan. Guests connect instantly — no password typing.</p>
+      <a href="/#type=wifi" class="cta">Try the WiFi QR Code Generator</a>
+    </div>
+  </section>
+  <section class="landing-howto">
+    <div class="container">
+      <h2>How to use</h2>
+      <ol>
+        <li>Select WiFi type, enter your network SSID and password.</li>
+        <li>Choose your security type (WPA, WEP, or no password).</li>
+        <li>Download and print the QR code. Guests scan to join.</li>
+      </ol>
+    </div>
+  </section>
+  <section class="landing-faq">
+    <div class="container">
+      <h2>Frequently asked questions</h2>
+      {faqItems.map((f) => (
+        <details>
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <section class="landing-related">
+    <div class="container">
+      <h2>Related tools</h2>
+      <ul>
+        {relatedTypes.map((r) => (
+          <li><a href={`/${r.slug}`}>{r.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
