@@ -1,3 +1,4 @@
+import React, { useId } from 'react';
 import type { QRPayload, QRType } from '@/lib/generators/types';
 
 type FieldErrors = Partial<Record<string, string>>;
@@ -25,13 +26,19 @@ export function InputForm({ type, payload, onChange, errors }: Props) {
 }
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+  const id = useId();
   return (
     <div className="field">
-      <label>{label}</label>
-      {children}
-      {error && <div className="error" role="alert">{error}</div>}
+      <label htmlFor={id}>{label}</label>
+      {wrapWithId(children, id)}
+      {error && <div className="error" role="alert" id={`${id}-error`}>{error}</div>}
     </div>
   );
+}
+
+function wrapWithId(node: React.ReactNode, id: string): React.ReactNode {
+  if (!React.isValidElement(node)) return node;
+  return React.cloneElement(node as React.ReactElement<{ id?: string }>, { id });
 }
 
 function UrlFields({ payload, onChange, errors }: { payload: Extract<QRPayload, { type: 'url' }>; onChange: (p: QRPayload) => void; errors: FieldErrors }) {

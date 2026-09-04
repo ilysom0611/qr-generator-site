@@ -7,4 +7,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  test: {
+    include: ['tests/unit/**/*.spec.ts'],
+    exclude: ['node_modules', 'dist', '.astro', 'tests/e2e/**'],
+  },
 });

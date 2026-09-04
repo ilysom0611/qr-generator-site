@@ -28,10 +28,9 @@ test.describe('tool smoke', () => {
 
   test('generates SVG for WiFi type', async ({ page }) => {
     await page.goto('/#type=wifi');
-    // Field component renders <label> and <input> as siblings (no htmlFor),
-    // so we locate inputs via the label's adjacent sibling.
-    await page.locator('label:has-text("SSID (network name)") + input').fill('TestNet');
-    await page.locator('label:has-text("Password") + input').fill('test123');
+    // Field now uses htmlFor/id (Task 12.5 a11y fix), so getByLabel works.
+    await page.getByLabel('SSID (network name)').fill('TestNet');
+    await page.getByLabel('Password').fill('test123');
     const downloadPromise = page.waitForEvent('download');
     await page.getByRole('button', { name: 'Download SVG' }).click();
     const download = await downloadPromise;
