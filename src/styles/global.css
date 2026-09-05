@@ -1,9 +1,3 @@
-/* Self-hosted CJK/Thai subsets — only downloaded when needed (unicode-range) */
-@import '@fontsource/noto-sans-sc/chinese-simplified-400.css';
-@import '@fontsource/noto-sans-sc/chinese-simplified-700.css';
-@import '@fontsource/noto-sans-thai/thai-400.css';
-@import '@fontsource/noto-sans-thai/thai-700.css';
-
 :root {
   --color-fg: #1a1a1a;
   --color-bg: #ffffff;
@@ -15,8 +9,9 @@
   --space-md: 1rem;
   --space-lg: 2rem;
   --space-xl: 4rem;
-  /* Extended with Noto Sans SC + Thai for CJK/Thai visitors; Latin still uses system stack */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', 'Noto Sans Thai', sans-serif;
+  /* Extended with Noto Sans SC + Thai for CJK/Thai visitors; Latin still uses system stack.
+     Font packages (@fontsource/noto-sans-sc, @fontsource/noto-sans-thai) to be added in Phase C. */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', 'Noto Sans Thai', 'Microsoft YaHei', 'PingFang SC', 'Tahoma', sans-serif;
   --font-mono: 'SF Mono', Monaco, Consolas, monospace;
   --max-width: 1200px;
 }
