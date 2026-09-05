@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   {
@@ -21,7 +20,6 @@ const faqItems = [
   }
 ];
 
-const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="QR Code Error Correction Levels Explained (L, M, Q, H)"
