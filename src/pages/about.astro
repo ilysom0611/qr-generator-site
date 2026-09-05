@@ -1,7 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
-<Base title="About — Free QR Code Generator" description="Why we built a free, private QR code generator. Our mission: zero-upload, zero-tracking tools.">
+<Base title="About — Free QR Code Generator" description="Why we built a free, private QR code generator. Our mission: zero-upload, zero-tracking tools." locale={locale}>
   <section class="container" style="padding: 2rem 0;">
     <h1>About</h1>
     <p>Most QR code generators upload your content to a server. We don't.</p>
