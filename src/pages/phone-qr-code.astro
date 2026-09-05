@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan a Phone QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to start a call to the encoded number.' },
@@ -18,13 +19,15 @@ const relatedTypes = [
   { slug: 'text-qr-code', label: 'Text QR Code' },
   { slug: 'qr-code-generator', label: 'All QR Code Tools' }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free Phone QR Code Generator — Tap to Call"
   description="Create a Phone QR code that opens the dialer with a number pre-filled. Perfect for signs, business cards, and flyers. 100% private."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <section class="landing-hero">
     <div class="container">
       <h1>Free Phone QR Code Generator</h1>
