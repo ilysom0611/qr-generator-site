@@ -52,10 +52,15 @@ const allSchemas = [softwareSchema, faqSchema].filter(Boolean);
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="googlef7c57a0ab687b5ef" />
+  <meta name="theme-color" content="#0066ff" />
+  <meta name="color-scheme" content="light" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalUrl} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Performance: preload critical OG image so social scrapers don't block -->
+  <link rel="preload" as="image" href={ogImageUrl} type="image/svg+xml" fetchpriority="low" />
 
   <!-- Open Graph (Facebook, LinkedIn, Discord, Slack) -->
   <meta property="og:title" content={title} />
