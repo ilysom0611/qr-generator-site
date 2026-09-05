@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+
+  <!-- Subtle accent stripe at top -->
+  <rect width="1200" height="6" fill="#0066ff"/>
+
+  <!-- QR code graphic (centered-left, ~360x360 area) -->
+  <g transform="translate(140, 135) scale(11.25)">
+    <!-- Top-left finder -->
+    <rect x="0" y="0" width="8" height="8" fill="#000"/>
+    <rect x="2" y="2" width="4" height="4" fill="#fff"/>
+    <rect x="3" y="3" width="2" height="2" fill="#000"/>
+    <!-- Top-right finder -->
+    <rect x="24" y="0" width="8" height="8" fill="#000"/>
+    <rect x="26" y="2" width="4" height="4" fill="#fff"/>
+    <rect x="27" y="3" width="2" height="2" fill="#000"/>
+    <!-- Bottom-left finder -->
+    <rect x="0" y="24" width="8" height="8" fill="#000"/>
+    <rect x="2" y="26" width="4" height="4" fill="#fff"/>
+    <rect x="3" y="27" width="2" height="2" fill="#000"/>
+    <!-- Timing patterns and modules (simplified) -->
+    <rect x="14" y="2" width="2" height="2" fill="#000"/>
+    <rect x="18" y="2" width="2" height="2" fill="#000"/>
+    <rect x="14" y="6" width="6" height="2" fill="#000"/>
+    <rect x="14" y="14" width="2" height="2" fill="#000"/>
+    <rect x="18" y="14" width="2" height="2" fill="#000"/>
+    <rect x="22" y="14" width="2" height="2" fill="#000"/>
+    <rect x="26" y="14" width="2" height="2" fill="#000"/>
+    <rect x="14" y="18" width="2" height="2" fill="#000"/>
+    <rect x="18" y="18" width="6" height="2" fill="#000"/>
+    <rect x="22" y="22" width="2" height="2" fill="#000"/>
+    <rect x="26" y="22" width="2" height="2" fill="#000"/>
+    <rect x="14" y="22" width="6" height="2" fill="#000"/>
+    <rect x="22" y="18" width="2" height="2" fill="#000"/>
+    <rect x="26" y="18" width="2" height="2" fill="#000"/>
+    <rect x="22" y="26" width="2" height="2" fill="#000"/>
+    <rect x="26" y="26" width="2" height="2" fill="#000"/>
+  </g>
+
+  <!-- Right text block -->
+  <g transform="translate(580, 195)" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+    <text x="0" y="0" font-size="28" font-weight="500" fill="#0066ff" letter-spacing="2">FREE · PRIVATE · BROWSER-BASED</text>
+    <text x="0" y="80" font-size="76" font-weight="700" fill="#1a1a1a">QR Code Generator</text>
+    <text x="0" y="140" font-size="76" font-weight="700" fill="#1a1a1a">for Everything</text>
+
+    <!-- Divider -->
+    <line x1="0" y1="180" x2="500" y2="180" stroke="#e5e5e5" stroke-width="2"/>
+
+    <text x="0" y="225" font-size="24" font-weight="400" fill="#555">URL · Text · WiFi · vCard · Email · Phone · SMS · Location</text>
+
+    <text x="0" y="280" font-size="22" font-weight="500" fill="#1a1a1a">qrcodegen-9qi.pages.dev</text>
+  </g>
+
+  <!-- Bottom footer note -->
+  <text x="600" y="585" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" fill="#777">No upload · No signup · No tracking · 100% private</text>
+</svg>
