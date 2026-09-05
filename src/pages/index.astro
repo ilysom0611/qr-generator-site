@@ -4,6 +4,9 @@ import { QRGenerator } from '../components/QRGenerator';
 import { getLocaleFromUrl } from '@/i18n/utils';
 
 ---
+
+const locale = getLocaleFromUrl(Astro.url);
+
 <Base locale={locale} title="Free QR Code Generator — No Upload, No Signup" description="Generate QR codes for URLs, WiFi, vCards, and more. 100% private, browser-based, no upload required." schema="software">
   <QRGenerator client:load locale={locale} />
 </Base>
