@@ -1,0 +1,134 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const faqItems = [
+  {
+    question: 'Can I edit a static QR code after printing?',
+    answer: 'No. A static QR code encodes the destination data directly. Once printed, the data is fixed. To change it, you must generate and redistribute a new code.'
+  },
+  {
+    question: 'Do dynamic QR codes work without internet?',
+    answer: 'No. Dynamic QR codes encode only a short redirect URL. The phone must connect to the redirect server to fetch the final destination. No internet, no scan.'
+  },
+  {
+    question: 'Are dynamic QR codes worth the monthly fee?',
+    answer: 'Only if you need the tracking data or plan to change destinations frequently. For one-time campaigns (event posters, packaging, business cards), static codes are free, faster, and more reliable. Dynamic codes earn their subscription when you have hundreds of codes in the field.'
+  },
+  {
+    question: 'Can dynamic QR codes expire if the company shuts down?',
+    answer: 'Yes — this is a real risk. If the company running the redirect service goes out of business, all your dynamic codes become dead links. Static codes have no such dependency.'
+  },
+  {
+    question: 'Which is more private?',
+    answer: 'Static is more private: nothing is tracked by default. Dynamic QR services inherently log every scan (that\'s how their analytics work). For privacy-conscious use cases, static is the better choice.'
+  }
+];
+---
+<Base
+  title="Static vs Dynamic QR Codes: What's the Difference?"
+  description="Static or dynamic? Free or subscription? When each makes sense. Privacy and reliability trade-offs compared."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <article class="blog-post">
+    <div class="container">
+      <header class="blog-header">
+        <p class="blog-meta">Comparison · 4 min read</p>
+        <h1>Static vs Dynamic QR Codes: What's the Difference?</h1>
+        <p class="blog-lede">There are two kinds of QR codes, and they have very different implications for privacy, cost, and reliability. Most people don't realize which one they're using.</p>
+      </header>
+
+      <div class="blog-content">
+        <p>When you see a "QR code generator" advertised, you might not realize that there are two fundamentally different technologies being sold under the same name. They look identical when you point your phone at them, but they work in completely different ways — and the choice between them has real consequences.</p>
+
+        <h2>Static QR codes: the original</h2>
+        <p>A static QR code encodes the destination data <strong>directly inside the QR code itself</strong>. The URL (or text, WiFi config, etc.) is stored in the black-and-white squares. When you scan it, your phone reads the data from the code and acts on it.</p>
+        <p>This is what QR codes were invented for in 1994. No servers, no internet required (for the scan itself), no tracking, no subscription. Once generated, the code works forever — as long as the destination exists.</p>
+
+        <h2>Dynamic QR codes: the SaaS version</h2>
+        <p>A dynamic QR code encodes only a <strong>short redirect URL</strong> (something like <code>qr.co/abc123</code>). The actual destination is stored on a server. When you scan the code, the phone fetches the short URL, the server redirects to the real destination.</p>
+        <p>Why bother with this indirection?</p>
+        <ul>
+          <li><strong>Edit the destination without reprinting.</strong> Change where the code goes anytime — useful for marketing campaigns where the landing page changes.</li>
+          <li><strong>Track scans.</strong> See how many people scanned, when, from where, with what device.</li>
+          <li><strong>A/B test destinations.</strong> Send half the scans to page A, half to page B.</li>
+        </ul>
+        <p>These services charge a subscription ($5-50/month) because they're hosting the redirect server.</p>
+
+        <h2>Side-by-side comparison</h2>
+        <table style="width:100%; border-collapse: collapse; margin: var(--space-lg) 0;">
+          <thead>
+            <tr style="background: #f4f4f4;">
+              <th style="text-align: left; padding: 8px; border: 1px solid #ddd;"></th>
+              <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Static</th>
+              <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Dynamic</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;">Cost</td><td style="padding: 8px; border: 1px solid #ddd;">Free</td><td style="padding: 8px; border: 1px solid #ddd;">$5-50/month</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;">Editable after print</td><td style="padding: 8px; border: 1px solid #ddd;">No</td><td style="padding: 8px; border: 1px solid #ddd;">Yes</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;">Works offline</td><td style="padding: 8px; border: 1px solid #ddd;">Yes</td><td style="padding: 8px; border: 1px solid #ddd;">No</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;">Privacy</td><td style="padding: 8px; border: 1px solid #ddd;">Strong</td><td style="padding: 8px; border: 1px solid #ddd;">Weak (logged)</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;">Longevity</td><td style="padding: 8px; border: 1px solid #ddd;">Permanent</td><td style="padding: 8px; border: 1px solid #ddd;">Tied to service</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;">Scan analytics</td><td style="padding: 8px; border: 1px solid #ddd;">No</td><td style="padding: 8px; border: 1px solid #ddd;">Yes</td></tr>
+          </tbody>
+        </table>
+
+        <h2>When to use static</h2>
+        <p>Use static for:</p>
+        <ul>
+          <li>Business cards (your website won't change often)</li>
+          <li>WiFi codes for your home or office</li>
+          <li>Product packaging</li>
+          <li>Restaurant menus</li>
+          <li>Event tickets and badges</li>
+          <li>Any code that lives in the physical world for a long time</li>
+        </ul>
+        <p>Static codes are the right default. They work, they're free, and they don't depend on anyone else's servers.</p>
+
+        <h2>When dynamic makes sense</h2>
+        <p>Use dynamic only when you specifically need one of these features:</p>
+        <ul>
+          <li><strong>You need scan analytics.</strong> Marketing campaigns where you want to measure ROI.</li>
+          <li><strong>The destination will change.</strong> A poster that links to a different event each month.</li>
+          <li><strong>You need A/B testing.</strong> Comparing two landing pages.</li>
+          <li><strong>You're printing 1000+ codes with different destinations.</strong> Bulk upload via spreadsheet.</li>
+        </ul>
+        <p>Most use cases don't need dynamic. The marketing industry's love affair with dynamic codes comes from the analytics, not from any technical necessity.</p>
+
+        <h2>The hidden risk of dynamic codes</h2>
+        <p>When the dynamic QR service shuts down, your codes stop working. This is rare for big players but has happened multiple times with smaller services. If you're printing 50,000 codes that need to work for 10 years, the dependency on a SaaS company is a real risk.</p>
+        <p>Static codes have no such dependency. The code contains the data; the data is whatever it says it is. As long as the destination exists, the code works.</p>
+
+        <h2>What we generate</h2>
+        <p>Our QR code generator makes static codes. No accounts, no subscriptions, no tracking. Your data never leaves your browser.</p>
+
+        <h2>FAQ</h2>
+        {faqItems.map((f) => (
+          <details>
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+
+        <h2>Try it now</h2>
+        <p>Make a free, static QR code. No signup, no tracking, works forever. <a href="/">Generate a QR code →</a></p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .blog-post { padding: var(--space-lg) 0; }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
+  .blog-meta { color: #777; font-size: 0.875rem; margin-bottom: var(--space-sm); }
+  .blog-header h1 { font-size: 2.25rem; line-height: 1.2; }
+  .blog-lede { font-size: 1.125rem; color: #555; max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-content { max-width: 720px; margin: 0 auto; }
+  .blog-content h2 { margin-top: var(--space-xl); }
+  .blog-content h3 { margin-top: var(--space-lg); }
+  .blog-content p, .blog-content li { font-size: 1.0625rem; line-height: 1.7; }
+  .blog-content details { margin: var(--space-sm) 0; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 4px; background: #fafafa; }
+  .blog-content summary { cursor: pointer; font-weight: 500; }
+  .blog-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+</style>
