@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan a WiFi QR code?', answer: 'Open your phone camera, point at the QR. Tap the WiFi prompt to auto-connect.' },
@@ -20,7 +19,6 @@ const relatedTypes = [
   { slug: 'text-qr-code', label: 'Text QR Code' }
 ];
 
-const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free WiFi QR Code Generator — Share WiFi Instantly"
