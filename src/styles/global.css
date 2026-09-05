@@ -1,3 +1,9 @@
+/* Self-hosted CJK/Thai subsets — only downloaded when needed (unicode-range) */
+@import '@fontsource/noto-sans-sc/chinese-simplified-400.css';
+@import '@fontsource/noto-sans-sc/chinese-simplified-700.css';
+@import '@fontsource/noto-sans-thai/thai-400.css';
+@import '@fontsource/noto-sans-thai/thai-700.css';
+
 :root {
   --color-fg: #1a1a1a;
   --color-bg: #ffffff;
@@ -9,12 +15,15 @@
   --space-md: 1rem;
   --space-lg: 2rem;
   --space-xl: 4rem;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Extended with Noto Sans SC + Thai for CJK/Thai visitors; Latin still uses system stack */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', 'Noto Sans Thai', sans-serif;
   --font-mono: 'SF Mono', Monaco, Consolas, monospace;
   --max-width: 1200px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+
+html { overflow-wrap: break-word; word-break: break-word; }
 
 html, body {
   margin: 0;
@@ -71,12 +80,45 @@ input:focus, textarea:focus, select:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--space-md);
 }
 .site-header a.brand {
   font-weight: 700;
   font-size: 1.25rem;
   color: var(--color-fg);
 }
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Locale switcher — 3 inline text links, no JS, screen-reader friendly */
+.locale-switcher {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  margin-left: var(--space-sm);
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--color-border);
+}
+.locale-switcher a {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  white-space: nowrap;
+}
+.locale-switcher a.active {
+  background: var(--color-accent);
+  color: #fff;
+}
+.locale-switcher a:hover:not(.active) {
+  background: rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+}
+
 .site-footer {
   border-top: 1px solid var(--color-border);
   padding: var(--space-lg) 0;
