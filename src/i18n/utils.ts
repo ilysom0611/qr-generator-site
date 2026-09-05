@@ -5,7 +5,9 @@ import { defaultLocale, locales, isLocale, type Locale } from './config';
 
 const dictionaries = { en, cn, th } as const;
 
-export function getLocaleFromUrl(url: URL): Locale {
+export function getLocaleFromUrl(url: URL, currentLocale?: string): Locale {
+  // Prefer Astro.currentLocale (correct under i18n rewrites), then URL prefix, then default.
+  if (currentLocale && isLocale(currentLocale)) return currentLocale;
   const seg = url.pathname.split('/').filter(Boolean)[0];
   return isLocale(seg) ? seg : defaultLocale;
 }

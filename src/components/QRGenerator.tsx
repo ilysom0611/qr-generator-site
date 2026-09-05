@@ -68,9 +68,9 @@ export function QRGenerator({ locale }: Props) {
     <div className="tool-page">
       <div className="container">
         <h1>{t('tool.h1')}</h1>
-        <p style={{ color: '#555' }}>{t('tool.subtitle')}</p>
+        <p className="tool-subtitle">{t('tool.subtitle')}</p>
         {isUnsupported ? (
-          <div role="alert" style={{ padding: '1rem', background: '#fee', borderRadius: 4 }}>
+          <div className="tool-unsupported" role="alert">
             {t('tool.unsupported')}
           </div>
         ) : (
@@ -84,7 +84,7 @@ export function QRGenerator({ locale }: Props) {
               <QRPreview spec={spec} locale={locale} />
               <DownloadButtons spec={spec} disabled={!canDownload} locale={locale} />
               {!canDownload && (
-                <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.5rem' }}>
+                <div className="tool-fix-errors">
                   {t('tool.fixErrors')}
                 </div>
               )}

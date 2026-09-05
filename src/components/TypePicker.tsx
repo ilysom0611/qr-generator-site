@@ -2,6 +2,18 @@ import type { QRType } from '@/lib/generators/types';
 import { getDictionary } from '@/i18n/utils';
 import type { Locale } from '@/i18n/config';
 
+// Unicode glyph icons for each QR type — universally readable, no asset weight.
+const TYPE_ICONS: Record<QRType, string> = {
+  url: '🔗',
+  text: '📝',
+  wifi: '📶',
+  vcard: '👤',
+  email: '✉️',
+  phone: '📞',
+  sms: '💬',
+  location: '📍',
+};
+
 const TYPE_IDS: QRType[] = ['url', 'text', 'wifi', 'vcard', 'email', 'phone', 'sms', 'location'];
 
 interface Props {
@@ -29,7 +41,8 @@ export function TypePicker({ active, onChange, locale }: Props) {
           onClick={() => onChange(id)}
           type="button"
         >
-          {t(`typePicker.${id}`)}
+          <span className="type-icon" aria-hidden="true">{TYPE_ICONS[id]}</span>
+          <span className="type-label">{t(`typePicker.${id}`)}</span>
         </button>
       ))}
     </div>

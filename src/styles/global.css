@@ -1,17 +1,32 @@
 :root {
-  --color-fg: #1a1a1a;
+  /* Warm gold/amber accent works across Western, African, Chinese, and Thai aesthetics:
+     gold = prosperity (CN), royal/warm (TH), sun/earth (Africa), premium (EU/US). */
+  --color-fg: #1f2330;
+  --color-fg-soft: #4a5160;
   --color-bg: #ffffff;
-  --color-accent: #0066ff;
-  --color-border: #e5e5e5;
-  --color-error: #d32f2f;
+  --color-bg-soft: #fff8ec;
+  --color-accent: #d97706;            /* amber-600 */
+  --color-accent-strong: #b45309;     /* amber-700 */
+  --color-accent-soft: #fef3c7;       /* amber-100 */
+  --color-border: #e7e5e0;
+  --color-border-strong: #d6d3cb;
+  --color-error: #c0392b;
+  --color-success: #0e8a4f;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(31, 35, 48, 0.05), 0 1px 4px rgba(31, 35, 48, 0.04);
+  --shadow-md: 0 4px 12px -4px rgba(31, 35, 48, 0.10), 0 2px 4px -2px rgba(31, 35, 48, 0.06);
+  --shadow-lg: 0 12px 32px -12px rgba(217, 119, 6, 0.18), 0 4px 8px -4px rgba(31, 35, 48, 0.06);
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
   --space-lg: 2rem;
   --space-xl: 4rem;
-  /* Extended with Noto Sans SC + Thai for CJK/Thai visitors; Latin still uses system stack.
-     Font packages (@fontsource/noto-sans-sc, @fontsource/noto-sans-thai) to be added in Phase C. */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', 'Noto Sans Thai', 'Microsoft YaHei', 'PingFang SC', 'Tahoma', sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+               'Noto Sans SC', 'Noto Sans Thai', 'Microsoft YaHei', 'PingFang SC',
+               'Hiragino Sans GB', Tahoma, '宋体', sans-serif;
   --font-mono: 'SF Mono', Monaco, Consolas, monospace;
   --max-width: 1200px;
 }
@@ -26,39 +41,55 @@ html, body {
   font-family: var(--font-sans);
   color: var(--color-fg);
   background: var(--color-bg);
-  line-height: 1.6;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1 { font-size: 2rem; margin: 0 0 var(--space-md); }
-h2 { font-size: 1.5rem; margin: var(--space-lg) 0 var(--space-sm); }
+h1 { font-size: 2rem; margin: 0 0 var(--space-md); letter-spacing: -0.01em; }
+h2 { font-size: 1.5rem; margin: var(--space-lg) 0 var(--space-sm); letter-spacing: -0.005em; }
 h3 { font-size: 1.25rem; margin: var(--space-md) 0 var(--space-sm); }
 
-a { color: var(--color-accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+a { color: var(--color-accent-strong); text-decoration: none; transition: color 0.15s ease; }
+a:hover { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
 
 button {
   font-family: inherit;
   font-size: 1rem;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-border);
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--color-border-strong);
   background: var(--color-bg);
+  color: var(--color-fg);
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
+  font-weight: 500;
 }
-button:hover { border-color: var(--color-fg); }
-button:disabled { opacity: 0.5; cursor: not-allowed; }
+button:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+button:active:not(:disabled) { transform: translateY(0); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
 
 input, textarea, select {
   font-family: inherit;
   font-size: 1rem;
-  padding: var(--space-sm);
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
   width: 100%;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
+input:hover, textarea:hover, select:hover { border-color: var(--color-accent); }
 input:focus, textarea:focus, select:focus {
-  outline: 2px solid var(--color-accent);
-  outline-offset: -1px;
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
 }
 
 .container {
@@ -70,6 +101,13 @@ input:focus, textarea:focus, select:focus {
 .site-header {
   border-bottom: 1px solid var(--color-border);
   padding: var(--space-md) 0;
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  background: rgba(255, 255, 255, 0.85);
 }
 .site-header .container {
   display: flex;
@@ -79,45 +117,136 @@ input:focus, textarea:focus, select:focus {
 }
 .site-header a.brand {
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: var(--color-fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
+.site-header a.brand::before {
+  content: '';
+  display: inline-block;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
+  border-radius: 4px;
+  /* Visual QR-grid hint using box-shadow pattern */
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.85),
+    0 1px 3px rgba(217, 119, 6, 0.3);
+  position: relative;
+}
+.site-header a.brand:hover { text-decoration: none; color: var(--color-accent-strong); }
+
 .site-nav {
   display: flex;
   align-items: center;
   gap: var(--space-md);
 }
+.site-nav > a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-fg-soft);
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+.site-nav > a:hover { color: var(--color-accent-strong); background: var(--color-accent-soft); text-decoration: none; }
 
-/* Locale switcher — 3 inline text links, no JS, screen-reader friendly */
+/* Locale switcher — dropdown list (NOT flat row).
+   Built on <details><summary> for no-JS accessibility and SSG compatibility. */
 .locale-switcher {
-  display: flex;
-  gap: 0.25rem;
-  align-items: center;
+  position: relative;
   margin-left: var(--space-sm);
-  padding-left: var(--space-md);
-  border-left: 1px solid var(--color-border);
 }
-.locale-switcher a {
+.locale-switcher > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  list-style: none;
+  cursor: pointer;
   font-size: 0.875rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  user-select: none;
+  font-weight: 500;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.locale-switcher > summary::-webkit-details-marker { display: none; }
+.locale-switcher > summary::marker { content: ''; }
+.locale-switcher > summary:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+.locale-switcher[open] > summary {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.18);
+}
+.locale-globe { font-size: 1.05rem; line-height: 1; }
+.locale-caret {
+  font-size: 0.7rem;
+  color: var(--color-fg-soft);
+  transition: transform 0.18s ease;
+}
+.locale-switcher[open] > summary .locale-caret { transform: rotate(180deg); }
+
+.locale-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  margin: 0;
+  padding: 0.4rem;
+  min-width: 200px;
+  list-style: none;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+}
+.locale-menu li { margin: 0; }
+.locale-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.92rem;
+  color: var(--color-fg);
+  border-radius: var(--radius-sm);
   text-decoration: none;
-  color: inherit;
-  white-space: nowrap;
+  transition: background-color 0.12s ease;
 }
-.locale-switcher a.active {
-  background: var(--color-accent);
-  color: #fff;
+.locale-menu a:hover { background: var(--color-accent-soft); text-decoration: none; }
+.locale-menu a.active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+  font-weight: 600;
 }
-.locale-switcher a:hover:not(.active) {
-  background: rgba(0, 0, 0, 0.05);
-  text-decoration: none;
+.locale-code {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: #888;
+  font-weight: 500;
 }
+.locale-menu a.active .locale-code { color: var(--color-accent); }
 
 .site-footer {
   border-top: 1px solid var(--color-border);
-  padding: var(--space-lg) 0;
+  padding: var(--space-xl) 0 var(--space-lg);
   margin-top: var(--space-xl);
   font-size: 0.875rem;
   text-align: center;
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
+  color: var(--color-fg-soft);
 }
+.site-footer p { margin: var(--space-xs) 0; }
+.site-footer a {
+  color: var(--color-fg-soft);
+  font-weight: 500;
+}
+.site-footer a:hover { color: var(--color-accent-strong); }
+.site-footer .footer-tagline { font-size: 0.95rem; color: var(--color-fg); margin-bottom: var(--space-md) !important; }

@@ -101,7 +101,7 @@ export function CustomizationPanel({ style, onChange, locale }: Props) {
               }
             />
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.5rem' }}>
+          <div className="logo-warning">
             {t('customization.logoWarning')}
           </div>
         </>
