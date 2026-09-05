@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan an SMS QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to open your SMS app with the recipient and body pre-filled.' },
@@ -20,7 +19,6 @@ const relatedTypes = [
   { slug: 'qr-code-generator', label: 'All QR Code Tools' }
 ];
 
-const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free SMS QR Code Generator — Pre-fill Texts"
