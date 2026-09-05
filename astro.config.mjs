@@ -4,7 +4,26 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://qrcodegen-9qi.pages.dev',
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en-US',
+          cn: 'zh-CN',
+          th: 'th-TH',
+        },
+      },
+    }),
+  ],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'cn', 'th'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   output: 'static',
   build: {
     inlineStylesheets: 'auto'
