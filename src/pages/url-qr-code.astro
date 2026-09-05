@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan a QR code?', answer: 'Open your phone camera app and point it at the QR code. A notification will appear with the link. Tap to open.' },
@@ -18,13 +19,15 @@ const relatedTypes = [
   { slug: 'text-qr-code', label: 'Text QR Code' },
   { slug: 'qr-code-generator', label: 'All QR Code Tools' }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free URL QR Code Generator — No Upload, No Signup"
   description="Convert any URL to a QR code instantly. 100% private, browser-based. No upload, no signup, free for unlimited use."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <section class="landing-hero">
     <div class="container">
       <h1>Free URL QR Code Generator</h1>
