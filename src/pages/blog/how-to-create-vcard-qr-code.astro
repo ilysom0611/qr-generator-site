@@ -1,0 +1,129 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const faqItems = [
+  {
+    question: 'What is a vCard QR code?',
+    answer: 'A vCard QR code (also called a meCard or digital business card QR code) encodes your contact details — name, phone, email, company, website — in the standard vCard format. When scanned, the phone offers to save the contact directly.'
+  },
+  {
+    question: 'Is vCard format the same on iPhone and Android?',
+    answer: 'Yes. vCard is an open standard (RFC 6350). Both iOS and Android recognize vCard 3.0 and 4.0 QR codes natively through the camera app.'
+  },
+  {
+    question: 'How many fields can I put in a vCard QR code?',
+    answer: 'Technically up to about 1,500 characters (the QR code capacity at medium error correction). In practice, stick to the essentials — name, phone, email, organization, title, URL. More than that and the code becomes too dense to scan reliably.'
+  },
+  {
+    question: 'Can I add my photo to a vCard QR code?',
+    answer: 'You can encode a URL to your photo in the PHOTO field, but not the photo itself (the file is too big). The phone will fetch the URL after scanning. Alternatively, use a logo overlay on the QR code itself.'
+  },
+  {
+    question: 'Is it better than NFC business cards?',
+    answer: 'Different trade-offs. QR codes work on any phone camera (no NFC needed) and are free. NFC is faster (one tap) but requires the receiver to have NFC enabled and you to have an NFC chip in your card. QR codes win on compatibility; NFC wins on speed.'
+  }
+];
+---
+<Base
+  title="How to Create a vCard QR Code (Digital Business Card Guide)"
+  description="Step-by-step guide to creating a vCard QR code for business cards. Encode your contact info so a single scan adds you to someone's phone — no app required."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <article class="blog-post">
+    <div class="container">
+      <header class="blog-header">
+        <p class="blog-meta">Guide · 5 min read</p>
+        <h1>How to Create a vCard QR Code for Your Business Card</h1>
+        <p class="blog-lede">Paper business cards pile up in drawers. A QR code on your card means one scan, and your contact is saved in someone's phone forever. Here's how to make one.</p>
+      </header>
+
+      <div class="blog-content">
+        <p>Every paper business card you hand out has the same fate: a desk drawer, a wallet back pocket, or the recycling bin within a week. A vCard QR code changes that. One scan with a phone camera, and your contact lands directly in the recipient's address book — with every detail, spelled correctly, ready to dial or email.</p>
+
+        <h2>What is a vCard?</h2>
+        <p>vCard is an open standard file format for electronic business cards. It can store:</p>
+        <ul>
+          <li>Name (first, last, middle, prefix, suffix)</li>
+          <li>Organization and job title</li>
+          <li>Phone numbers (multiple types: mobile, work, fax)</li>
+          <li>Email addresses</li>
+          <li>Physical address</li>
+          <li>Website and social URLs</li>
+          <li>Photo URL</li>
+          <li>Notes</li>
+        </ul>
+        <p>When encoded in a QR code, the phone recognizes the format and offers to save the contact. The recipient never types anything.</p>
+
+        <h2>Why use a QR code instead of just typing your details?</h2>
+        <ul>
+          <li><strong>Speed:</strong> One scan vs. typing 10+ fields</li>
+          <li><strong>Accuracy:</strong> No typos in your email or phone number</li>
+          <li><strong>Always up to date:</strong> You can include a link to your latest contact info, or rotate the QR code itself</li>
+          <li><strong>Better conversion:</strong> People are far more likely to actually save the contact when it takes one tap</li>
+        </ul>
+
+        <h2>How to create a vCard QR code</h2>
+        <ol>
+          <li>Open the <a href="/vcard-qr-code">vCard QR Code Generator</a>.</li>
+          <li>Fill in your <strong>name</strong> (first and last).</li>
+          <li>Add your <strong>organization</strong> and <strong>title</strong>.</li>
+          <li>Enter your <strong>phone</strong> (mobile is most useful).</li>
+          <li>Enter your <strong>email</strong>.</li>
+          <li>Add your <strong>website</strong> and any social URLs (LinkedIn, Twitter, etc.) — keep it short.</li>
+          <li>Optionally add your address for in-person meetings.</li>
+          <li>Choose an error correction level of <strong>Q (Quartile, 25%)</strong> — gives you room to add a logo overlay if you want.</li>
+          <li>Download as <strong>SVG</strong> for printing or <strong>PNG</strong> for digital use.</li>
+        </ol>
+
+        <h2>Field-by-field best practices</h2>
+        <h3>Name fields</h3>
+        <p>Use your real name as it appears on official documents. Don't include honorifics (Dr., Mr.) unless you use them professionally — saves QR space.</p>
+        <h3>Phone numbers</h3>
+        <p>Include the country code (+1, +44, +86). Mobile is most useful; include work only if relevant.</p>
+        <h3>Email</h3>
+        <p>Use your most-reachable email. Avoid info@ aliases — they look impersonal and tend to be ignored.</p>
+        <h3>URLs</h3>
+        <p>Limit to 1-2 critical links. LinkedIn + personal site is the sweet spot. Don't dump every social profile you have.</p>
+        <h3>Address</h3>
+        <p>Include only if people actually visit you. For most remote workers, skip it.</p>
+
+        <h2>How big should the QR code be on a business card?</h2>
+        <p>A standard business card is 3.5 × 2 inches (85 × 55 mm). The QR code should be at least <strong>0.8 × 0.8 inches</strong> (20 × 20 mm) — preferably larger. Place it on the back of the card or in a corner of the front, leaving at least a 4-module white border around it.</p>
+
+        <h2>Common mistakes to avoid</h2>
+        <ul>
+          <li><strong>Too many fields.</strong> If your QR code has more than 15 fields, it gets hard to scan. Less is more.</li>
+          <li><strong>No white space around the code.</strong> Printers and designers often crop margins. Always leave a "quiet zone" of at least 4 modules of white space around the code.</li>
+          <li><strong>Logo overlay without enough error correction.</strong> If you put a logo in the middle, use H (30%) error correction, otherwise the code breaks.</li>
+          <li><strong>Outdated info.</strong> If you change jobs, regenerate the QR code immediately — paper cards already printed will save the old info.</li>
+        </ul>
+
+        <h2>FAQ</h2>
+        {faqItems.map((f) => (
+          <details>
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+
+        <h2>Try it now</h2>
+        <p>Create your own vCard QR code in 60 seconds. <a href="/vcard-qr-code">Generate a vCard QR code →</a></p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .blog-post { padding: var(--space-lg) 0; }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
+  .blog-meta { color: #777; font-size: 0.875rem; margin-bottom: var(--space-sm); }
+  .blog-header h1 { font-size: 2.25rem; line-height: 1.2; }
+  .blog-lede { font-size: 1.125rem; color: #555; max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-content { max-width: 720px; margin: 0 auto; }
+  .blog-content h2 { margin-top: var(--space-xl); }
+  .blog-content h3 { margin-top: var(--space-lg); }
+  .blog-content p, .blog-content li { font-size: 1.0625rem; line-height: 1.7; }
+  .blog-content details { margin: var(--space-sm) 0; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 4px; background: #fafafa; }
+  .blog-content summary { cursor: pointer; font-weight: 500; }
+</style>
