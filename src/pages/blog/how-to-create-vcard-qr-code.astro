@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   {
@@ -25,7 +24,6 @@ const faqItems = [
   }
 ];
 
-const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="How to Create a vCard QR Code (Digital Business Card Guide)"
