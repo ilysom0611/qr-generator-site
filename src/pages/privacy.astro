@@ -1,7 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
-<Base title="Privacy Policy — Free QR Code Generator" description="Our privacy commitment: zero upload, zero cookies, zero tracking of QR content. We explain exactly what data is and isn't collected.">
+<Base title="Privacy Policy — Free QR Code Generator" description="Our privacy commitment: zero upload, zero cookies, zero tracking of QR content. We explain exactly what data is and isn't collected." locale={locale}>
   <section class="container" style="padding: 2rem 0;">
     <h1>Privacy Policy</h1>
     <h2>What we collect</h2>
