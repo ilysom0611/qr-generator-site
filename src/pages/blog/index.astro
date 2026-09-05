@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const posts = [
   {
@@ -45,12 +46,14 @@ const posts = [
     date: '2026-09-05'
   }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="QR Code Guides & Tutorials — Free QR Code Generator Blog"
   description="Practical guides on QR codes: WiFi sharing, vCard business cards, error correction, logos, static vs dynamic, and printing sizes."
   canonical="/blog"
->
+ locale={locale}>
   <article class="blog-index">
     <div class="container">
       <header class="blog-header">
