@@ -1,5 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const title = 'How to Make a QR Code for WiFi (Step-by-Step Guide, 2026)';
 const description = 'Let guests scan and join your WiFi in seconds. Free, no-app QR code generator with WPA/WPA2/WPA3 support, hidden-SSID option, and printable label template.';
@@ -36,8 +37,10 @@ const breadcrumbSchema = {
     { '@type': 'ListItem', position: 3, name: 'How to make a QR code for WiFi', item: 'https://qrcodegen-9qi.pages.dev/blog/how-to-make-qr-code-for-wifi/' }
   ]
 };
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
-<Base title={title} description={description} schema="faq" faqItems={faqItems}>
+<Base title={title} description={description} schema="faq" faqItems={faqItems} locale={locale}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <article class="blog-post">
