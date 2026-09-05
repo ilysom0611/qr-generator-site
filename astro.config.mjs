@@ -22,6 +22,11 @@ export default defineConfig({
     locales: ['en', 'cn', 'th'],
     routing: {
       prefixDefaultLocale: false,
+      fallbackType: 'rewrite',
+    },
+    fallback: {
+      cn: 'en',
+      th: 'en',
     },
   },
   output: 'static',
