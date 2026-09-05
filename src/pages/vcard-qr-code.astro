@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan a vCard QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to add the contact to your address book.' },
@@ -18,13 +19,15 @@ const relatedTypes = [
   { slug: 'location-qr-code', label: 'Location QR Code' },
   { slug: 'text-qr-code', label: 'Text QR Code' }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free vCard QR Code Generator — Share Contacts Instantly"
   description="Create a vCard QR code for business cards or events. Recipients scan to save your contact. 100% private, browser-based."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <section class="landing-hero">
     <div class="container">
       <h1>Free vCard QR Code Generator</h1>
