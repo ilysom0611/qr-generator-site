@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan a Text QR code?', answer: 'Open your phone camera, point at the QR. The plain text content appears after you tap the prompt.' },
@@ -20,7 +19,6 @@ const relatedTypes = [
   { slug: 'qr-code-generator', label: 'All QR Code Tools' }
 ];
 
-const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free Text QR Code Generator — Encode Any Message"
