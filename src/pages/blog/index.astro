@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getLocaleFromUrl } from '@/i18n/utils';
 
 const posts = [
   {
@@ -47,7 +46,6 @@ const posts = [
   }
 ];
 
-const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="QR Code Guides & Tutorials — Free QR Code Generator Blog"
