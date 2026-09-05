@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   {
@@ -23,13 +24,15 @@ const faqItems = [
     answer: 'Yes — download the code as SVG, then overlay your logo in Figma, Illustrator, or even PowerPoint. For PNG, you can use any image editor. We recommend doing it before printing rather than after, for consistent output.'
   }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="How to Add a Logo to a QR Code (Without Breaking It)"
   description="Step-by-step guide to putting a logo in the center of a QR code. Size, error correction, contrast — everything you need for a scannable branded QR."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <article class="blog-post">
     <div class="container">
       <header class="blog-header">
