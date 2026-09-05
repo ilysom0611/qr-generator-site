@@ -16,9 +16,11 @@ export interface Props {
 
 const { title, description, canonical, schema, faqItems, locale: propLocale } = Astro.props;
 
-// Resolve locale: explicit prop > URL prefix > default
+// Resolve locale with priority: explicit prop > Astro.currentLocale (set by i18n fallback) > URL prefix > default.
+// Astro.currentLocale is provided by Astro 4's i18n routing; on rewrites it reflects the original request locale.
 const urlSeg = Astro.url.pathname.split('/').filter(Boolean)[0];
-const resolvedLocale: Locale = propLocale ?? (isLocale(urlSeg) ? urlSeg : defaultLocale);
+const fromUrl: Locale = isLocale(urlSeg) ? urlSeg : defaultLocale;
+const resolvedLocale: Locale = propLocale ?? (Astro.currentLocale as Locale | undefined) ?? fromUrl;
 const t = useTranslations(resolvedLocale);
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
@@ -55,7 +57,7 @@ const faqSchema = schema === 'faq' && faqItems ? {
 
 const allSchemas = [softwareSchema, faqSchema].filter(Boolean);
 
-// Hreflang alternates — all 3 locales always emitted (Astro native i18n handles fallback)
+// Hreflang alternates — always emit all 3 (Astro native i18n handles fallback)
 const alternates = locales.map((loc) => ({
   hreflang: localeHtmlLang[loc],
   href: new URL(getLocalizedPath(Astro.url.pathname, loc), Astro.site).href,
@@ -114,16 +116,16 @@ const htmlLang = localeHtmlLang[resolvedLocale];
       <a href={getLocalizedPath('/', resolvedLocale)} class="brand">{t('brand.name')}</a>
       <nav class="site-nav">
         <a href={getLocalizedPath('/about', resolvedLocale)}>{t('nav.about')}</a>
-        <nav class="locale-switcher" aria-label={t('nav.language')}>
+        <div class="locale-switcher" aria-label={t('nav.language')}>
           {locales.map((loc) => (
             <a
               href={getLocalizedPath(Astro.url.pathname, loc)}
               hreflang={localeHtmlLang[loc]}
-              aria-current={loc === resolvedLocale ? 'true' : 'false'}
+              aria-current={loc === resolvedLocale ? 'page' : 'false'}
               class:list={['locale-link', { active: loc === resolvedLocale }]}
             >{localeLabels[loc]}</a>
           ))}
-        </nav>
+        </div>
       </nav>
     </div>
   </header>
@@ -140,6 +142,5 @@ const htmlLang = localeHtmlLang[resolvedLocale];
       </p>
     </div>
   </footer>
-  <!-- Cloudflare Web Analytics (placeholder; real beacon added in M5/M6) -->
 </body>
 </html>
