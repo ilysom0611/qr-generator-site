@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   {
@@ -23,13 +24,15 @@ const faqItems = [
     answer: 'Different trade-offs. QR codes work on any phone camera (no NFC needed) and are free. NFC is faster (one tap) but requires the receiver to have NFC enabled and you to have an NFC chip in your card. QR codes win on compatibility; NFC wins on speed.'
   }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="How to Create a vCard QR Code (Digital Business Card Guide)"
   description="Step-by-step guide to creating a vCard QR code for business cards. Encode your contact info so a single scan adds you to someone's phone — no app required."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <article class="blog-post">
     <div class="container">
       <header class="blog-header">
