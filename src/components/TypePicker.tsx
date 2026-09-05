@@ -1,41 +1,35 @@
 import type { QRType } from '@/lib/generators/types';
+import { getDictionary } from '@/i18n/utils';
+import type { Locale } from '@/i18n/config';
 
-const TYPES: Array<{ id: QRType; label: string }> = [
-  { id: 'url', label: 'URL' },
-  { id: 'text', label: 'Text' },
-  { id: 'wifi', label: 'WiFi' },
-  { id: 'vcard', label: 'vCard' },
-  { id: 'email', label: 'Email' },
-  { id: 'phone', label: 'Phone' },
-  { id: 'sms', label: 'SMS' },
-  { id: 'location', label: 'Location' }
-];
+const TYPE_IDS: QRType[] = ['url', 'text', 'wifi', 'vcard', 'email', 'phone', 'sms', 'location'];
 
 interface Props {
   active: QRType;
   onChange: (type: QRType) => void;
+  locale: Locale;
 }
 
-// Tabpanel ID is shared across all tabs because only one form is rendered.
-// Each tab button announces which form section it controls via aria-controls.
 const FORPanel = 'qr-form-panel';
 
-export function TypePicker({ active, onChange }: Props) {
+export function TypePicker({ active, onChange, locale }: Props) {
+  const dict = getDictionary(locale);
+  const t = (k: string) => dict[k] ?? k;
   return (
-    <div className="type-picker" role="tablist" aria-label="QR code type">
-      {TYPES.map((t) => (
+    <div className="type-picker" role="tablist" aria-label={t('typePicker.ariaLabel')}>
+      {TYPE_IDS.map((id) => (
         <button
-          key={t.id}
-          id={`qr-tab-${t.id}`}
+          key={id}
+          id={`qr-tab-${id}`}
           role="tab"
-          aria-selected={active === t.id}
+          aria-selected={active === id}
           aria-controls={FORPanel}
-          tabIndex={active === t.id ? 0 : -1}
-          className={active === t.id ? 'is-active' : ''}
-          onClick={() => onChange(t.id)}
+          tabIndex={active === id ? 0 : -1}
+          className={active === id ? 'is-active' : ''}
+          onClick={() => onChange(id)}
           type="button"
         >
-          {t.label}
+          {t(`typePicker.${id}`)}
         </button>
       ))}
     </div>
