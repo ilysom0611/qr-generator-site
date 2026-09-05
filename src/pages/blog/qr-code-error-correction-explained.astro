@@ -1,0 +1,112 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const faqItems = [
+  {
+    question: 'Which error correction level should I use?',
+    answer: 'For most QR codes (URLs, contact info), M (Medium, 15%) is the right balance — small code, decent resilience. Use Q or H only if you plan to add a logo overlay or the code will be in a dirty/worn environment.'
+  },
+  {
+    question: 'Does higher error correction mean a bigger QR code?',
+    answer: 'Yes. Each step up (L → M → Q → H) increases the code density by roughly 7-15% for the same data. The QR code gets more complex-looking but takes up the same physical space.'
+  },
+  {
+    question: 'Can a QR code with 30% damage still be scanned?',
+    answer: 'Yes — if you use H (30%) error correction, the code can tolerate up to 30% of its modules being destroyed, dirty, or obscured, and still scan correctly. This is how QR codes got their reputation for being "indestructible."'
+  },
+  {
+    question: 'How does error correction actually work?',
+    answer: 'QR codes use Reed-Solomon error correction — the same math used in CDs, DVDs, and satellite communication. The QR generator adds redundant data (parity bytes) to the encoded information. The scanner uses that redundancy to reconstruct missing or damaged pieces.'
+  }
+];
+---
+<Base
+  title="QR Code Error Correction Levels Explained (L, M, Q, H)"
+  description="L, M, Q, H — what do these error correction levels actually mean? When to use each one. How Reed-Solomon codes make QR codes damage-proof."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <article class="blog-post">
+    <div class="container">
+      <header class="blog-header">
+        <p class="blog-meta">Explainer · 4 min read</p>
+        <h1>QR Code Error Correction Levels Explained: L, M, Q, H</h1>
+        <p class="blog-lede">QR codes have a built-in damage tolerance. The level you choose decides how much of the code can be destroyed before it stops scanning. Here's how to pick the right one.</p>
+      </header>
+
+      <div class="blog-content">
+        <p>If you've ever generated a QR code, you've seen the "Error correction" dropdown with four options: L, M, Q, H. Most people ignore it. Don't — it determines how your code behaves when things go wrong.</p>
+
+        <h2>The four levels, in plain English</h2>
+        <p>QR codes use <strong>Reed-Solomon error correction</strong>, the same math used in CDs, DVDs, Blu-ray discs, and deep-space communication. The QR generator adds redundant data to the encoded information. The scanner uses that redundancy to reconstruct the original even when parts are missing.</p>
+        <p>Four levels, increasing redundancy:</p>
+        <ul>
+          <li><strong>L — Low (7%)</strong> — Tolerates up to 7% damage. Smallest, simplest code.</li>
+          <li><strong>M — Medium (15%)</strong> — Tolerates up to 15% damage. The default and best balance for most uses.</li>
+          <li><strong>Q — Quartile (25%)</strong> — Tolerates up to 25% damage. Use when adding a small logo overlay.</li>
+          <li><strong>H — High (30%)</strong> — Tolerates up to 30% damage. Use for outdoor codes, industrial environments, or large logo overlays.</li>
+        </ul>
+
+        <h2>Why it matters in the real world</h2>
+        <p>Imagine a QR code printed on a business card. Three months later, the card looks like this:</p>
+        <ul>
+          <li>A coffee ring covers the bottom-left corner</li>
+          <li>Someone's pen scribbled over the top-right</li>
+          <li>A tear along the edge removed a few modules</li>
+        </ul>
+        <p>If you used L (7%), the code is dead. If you used M (15%), still dead. If you used H (30%), it still scans perfectly.</p>
+
+        <h2>When to use each level</h2>
+        <h3>L (Low) — almost never</h3>
+        <p>Use L only when you need maximum data capacity in a tiny code — for example, encoding a long URL in a small space. Skip it for any code that lives in the physical world.</p>
+        <h3>M (Medium) — the default for most uses</h3>
+        <p>Use M for: business cards, packaging, posters, indoor signage, restaurant menus, WiFi QR codes, event tickets. It's the right balance of size and resilience.</p>
+        <h3>Q (Quartile) — when adding a logo</h3>
+        <p>If you plan to overlay a small logo in the center of the code (a common technique for branded QR codes), use Q at minimum. The logo covers part of the code, so you need the extra redundancy to compensate.</p>
+        <h3>H (High) — for tough environments</h3>
+        <p>Use H when the code will be: outdoor (exposed to UV, rain, scratches), on industrial equipment (grease, abrasion), or carries a large logo overlay (more than 25% of the code area).</p>
+
+        <h2>The trade-off: code density</h2>
+        <p>Higher error correction means more redundant data, which means more modules in the same QR code. Visually, the code looks "busier" — more black squares packed into the same physical size.</p>
+        <p>For a URL like <code>https://example.com</code>:</p>
+        <ul>
+          <li>L — 21×21 modules</li>
+          <li>M — 21×21 modules (same, for short data)</li>
+          <li>Q — 25×25 modules</li>
+          <li>H — 25×25 modules</li>
+        </ul>
+        <p>For longer URLs (50+ characters), the gap widens. A 100-character URL might be 33×33 at L and 53×53 at H.</p>
+        <p>This doesn't change the physical size of the code (you print whatever size you want), but it does affect how far away the code can be scanned — denser codes need sharper focus.</p>
+
+        <h2>How to set it</h2>
+        <p>In our QR code generator, the error correction selector is in the <strong>Customize</strong> panel. Pick M for most uses; bump to Q or H if you're adding a logo or printing outdoors.</p>
+
+        <h2>FAQ</h2>
+        {faqItems.map((f) => (
+          <details>
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+
+        <h2>Try it now</h2>
+        <p>Experiment with all four levels and see the difference. <a href="/#type=customize">Generate a QR code →</a></p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .blog-post { padding: var(--space-lg) 0; }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
+  .blog-meta { color: #777; font-size: 0.875rem; margin-bottom: var(--space-sm); }
+  .blog-header h1 { font-size: 2.25rem; line-height: 1.2; }
+  .blog-lede { font-size: 1.125rem; color: #555; max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-content { max-width: 720px; margin: 0 auto; }
+  .blog-content h2 { margin-top: var(--space-xl); }
+  .blog-content h3 { margin-top: var(--space-lg); }
+  .blog-content p, .blog-content li { font-size: 1.0625rem; line-height: 1.7; }
+  .blog-content details { margin: var(--space-sm) 0; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 4px; background: #fafafa; }
+  .blog-content summary { cursor: pointer; font-weight: 500; }
+  .blog-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+</style>
