@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const faqItems = [
+  {
+    question: 'Will adding a logo break my QR code?',
+    answer: 'Only if you cover too much of it. With H (30%) error correction, you can cover up to ~25% of the code area with a circular image in the center. With M (15%), keep the logo to ~10% or less.'
+  },
+  {
+    question: 'Should the logo be square or circular?',
+    answer: 'Circular logos work best because they have no sharp corners to interfere with the QR grid. If you have a square logo, either round its corners in your design tool or use a white circular background behind it.'
+  },
+  {
+    question: 'What size should the logo be?',
+    answer: 'The logo should be 20-25% of the QR code\'s width. For a 200px QR code, a 40-50px logo. For a 2cm code, the logo is 4-5mm. Too small and no one notices it; too big and the code stops scanning.'
+  },
+  {
+    question: 'Should the logo have a white background?',
+    answer: 'Yes. A white (or light) circle behind the logo dramatically improves scannability because it increases the contrast between the logo and the dark QR modules. Without it, dark logos blend into the dark modules and scanners struggle.'
+  },
+  {
+    question: 'Can I add the logo after generating the QR code?',
+    answer: 'Yes — download the code as SVG, then overlay your logo in Figma, Illustrator, or even PowerPoint. For PNG, you can use any image editor. We recommend doing it before printing rather than after, for consistent output.'
+  }
+];
+---
+<Base
+  title="How to Add a Logo to a QR Code (Without Breaking It)"
+  description="Step-by-step guide to putting a logo in the center of a QR code. Size, error correction, contrast — everything you need for a scannable branded QR."
+  schema="faq"
+  faqItems={faqItems}
+>
+  <article class="blog-post">
+    <div class="container">
+      <header class="blog-header">
+        <p class="blog-meta">Tutorial · 5 min read</p>
+        <h1>How to Add a Logo to a QR Code (Without Breaking It)</h1>
+        <p class="blog-lede">A QR code with your logo in the middle looks 10x more professional. But too big a logo, or the wrong error correction level, and the code stops scanning. Here's how to do it right.</p>
+      </header>
+
+      <div class="blog-content">
+        <p>You see branded QR codes everywhere — coffee cups, packaging, business cards. They all have one thing in common: a logo in the center that says "this is from us, not random." But there's a real engineering problem to solve: a QR code is data. Cover part of it with an image, and you might cover the very data the scanner needs.</p>
+
+        <h2>The trick: error correction</h2>
+        <p>QR codes have built-in redundancy. Use the H (High, 30%) error correction level, and the code can tolerate up to 30% of its modules being obscured — and still scan correctly.</p>
+        <p>This is exactly why branded QR codes work: the logo covers part of the data, but the redundant copy lets the scanner reconstruct what it can't see.</p>
+
+        <h2>Step-by-step: add a logo to a QR code</h2>
+        <ol>
+          <li>Open the <a href="/#type=customize">QR code generator</a>.</li>
+          <li>Choose <strong>URL</strong> (or any other type — same steps).</li>
+          <li>Enter your URL or data.</li>
+          <li>In the <strong>Customize</strong> panel, change Error correction to <strong>H (30%)</strong>.</li>
+          <li>Click <strong>Logo</strong> upload and select your logo file (PNG with transparency works best).</li>
+          <li>Download the result as <strong>SVG</strong> for print or <strong>PNG</strong> for digital.</li>
+          <li>Test by printing or displaying at the final intended size — scan it with two different phones to make sure.</li>
+        </ol>
+
+        <h2>Logo size guidelines</h2>
+        <p>The sweet spot is <strong>20-25% of the QR code's width</strong>. Visual reference:</p>
+        <ul>
+          <li>200px QR code → 40-50px logo</li>
+          <li>2cm QR code (business card size) → 4-5mm logo</li>
+          <li>10cm QR code (poster size) → 2-2.5cm logo</li>
+        </ul>
+        <p>Smaller and the logo gets lost; larger and the code stops scanning reliably.</p>
+
+        <h2>Three rules for a scannable branded QR</h2>
+        <h3>1. Use H error correction</h3>
+        <p>This is non-negotiable. M (15%) gives you room for a tiny logo, but anything substantial breaks the code. H (30%) is the safe choice.</p>
+        <h3>2. Add a white background behind the logo</h3>
+        <p>A small white circle behind the logo dramatically improves scannability. Without it, dark logos blend into the dark QR modules. Most QR generators (including ours) do this automatically when you upload a logo.</p>
+        <h3>3. Round the logo's corners (or use a circular crop)</h3>
+        <p>Square logos with sharp corners interfere with the QR grid pattern. Circular logos (or rounded squares) sit more naturally on top.</p>
+
+        <h2>Common mistakes</h2>
+        <ul>
+          <li><strong>Using M error correction with a big logo.</strong> The logo covers more than 15% and the code fails. Always bump to H.</li>
+          <li><strong>Logo with no background.</strong> A dark logo directly on dark QR modules = invisible to scanners.</li>
+          <li><strong>Logo larger than 30% of the code.</strong> Even H error correction can't save you.</li>
+          <li><strong>Testing only on one phone.</strong> Different phones have different scanner tolerances. Test on iPhone and Android before printing 10,000 of them.</li>
+          <li><strong>Low-resolution logo.</strong> A pixelated logo looks unprofessional. Use SVG or a high-resolution PNG (at least 500×500px).</li>
+        </ul>
+
+        <h2>Adding the logo yourself (after generation)</h2>
+        <p>If your generator doesn't have a logo upload (ours does), you can do it in any design tool:</p>
+        <ol>
+          <li>Generate the QR code with H error correction, download as SVG or high-res PNG.</li>
+          <li>Open Figma / Illustrator / Photoshop / even PowerPoint.</li>
+          <li>Place a small white circle in the center.</li>
+          <li>Place your logo on top of the white circle.</li>
+          <li>Make sure the logo doesn't exceed ~25% of the QR code's width.</li>
+          <li>Export as a single image.</li>
+        </ol>
+        <p>Test it with at least two different phones before going to print.</p>
+
+        <h2>FAQ</h2>
+        {faqItems.map((f) => (
+          <details>
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+
+        <h2>Try it now</h2>
+        <p>Generate a branded QR code with your logo — H error correction, automatic white circle. <a href="/#type=customize">Add a logo to your QR code →</a></p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .blog-post { padding: var(--space-lg) 0; }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
+  .blog-meta { color: #777; font-size: 0.875rem; margin-bottom: var(--space-sm); }
+  .blog-header h1 { font-size: 2.25rem; line-height: 1.2; }
+  .blog-lede { font-size: 1.125rem; color: #555; max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-content { max-width: 720px; margin: 0 auto; }
+  .blog-content h2 { margin-top: var(--space-xl); }
+  .blog-content h3 { margin-top: var(--space-lg); }
+  .blog-content p, .blog-content li { font-size: 1.0625rem; line-height: 1.7; }
+  .blog-content details { margin: var(--space-sm) 0; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 4px; background: #fafafa; }
+  .blog-content summary { cursor: pointer; font-weight: 500; }
+</style>
