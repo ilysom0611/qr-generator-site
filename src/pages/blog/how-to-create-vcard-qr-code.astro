@@ -1,42 +1,29 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
+import { getBlogPost, blogChrome } from '@/i18n/blog';
 
-const faqItems = [
-  {
-    question: 'What is a vCard QR code?',
-    answer: 'A vCard QR code (also called a meCard or digital business card QR code) encodes your contact details — name, phone, email, company, website — in the standard vCard format. When scanned, the phone offers to save the contact directly.'
-  },
-  {
-    question: 'Is vCard format the same on iPhone and Android?',
-    answer: 'Yes. vCard is an open standard (RFC 6350). Both iOS and Android recognize vCard 3.0 and 4.0 QR codes natively through the camera app.'
-  },
-  {
-    question: 'How many fields can I put in a vCard QR code?',
-    answer: 'Technically up to about 1,500 characters (the QR code capacity at medium error correction). In practice, stick to the essentials — name, phone, email, organization, title, URL. More than that and the code becomes too dense to scan reliably.'
-  },
-  {
-    question: 'Can I add my photo to a vCard QR code?',
-    answer: 'You can encode a URL to your photo in the PHOTO field, but not the photo itself (the file is too big). The phone will fetch the URL after scanning. Alternatively, use a logo overlay on the QR code itself.'
-  },
-  {
-    question: 'Is it better than NFC business cards?',
-    answer: 'Different trade-offs. QR codes work on any phone camera (no NFC needed) and are free. NFC is faster (one tap) but requires the receiver to have NFC enabled and you to have an NFC chip in your card. QR codes win on compatibility; NFC wins on speed.'
-  }
-];
-
+const locale = getLocaleFromUrl(Astro.url, Astro.currentLocale);
+const post = getBlogPost('how-to-create-vcard-qr-code', locale);
+const chrome = blogChrome[locale];
 ---
-<Base
-  title="How to Create a vCard QR Code (Digital Business Card Guide)"
-  description="Step-by-step guide to creating a vCard QR code for business cards. Encode your contact info so a single scan adds you to someone's phone — no app required."
-  schema="faq"
-  faqItems={faqItems}>
+
+<Base title={post.title} description={post.description} schema="faq" faqItems={post.faqItems}>
   <article class="blog-post">
     <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">{chrome.home}</a> › <a href="/blog/">{chrome.blog}</a> › <span>{post.breadcrumb}</span>
+      </nav>
+
       <header class="blog-header">
-        <p class="blog-meta">Guide · 5 min read</p>
-        <h1>How to Create a vCard QR Code for Your Business Card</h1>
-        <p class="blog-lede">Paper business cards pile up in drawers. A QR code on your card means one scan, and your contact is saved in someone's phone forever. Here's how to make one.</p>
+        <p class="blog-meta">{post.meta}</p>
+        <h1>{post.h1}</h1>
+        <p class="blog-lede">{post.lede}</p>
       </header>
+
+      {post.bodyNote && (
+        <p class="blog-body-note">{post.bodyNote}</p>
+      )}
 
       <div class="blog-content">
         <p>Every paper business card you hand out has the same fate: a desk drawer, a wallet back pocket, or the recycling bin within a week. A vCard QR code changes that. One scan with a phone camera, and your contact lands directly in the recipient's address book — with every detail, spelled correctly, ready to dial or email.</p>
@@ -99,16 +86,15 @@ const faqItems = [
           <li><strong>Outdated info.</strong> If you change jobs, regenerate the QR code immediately — paper cards already printed will save the old info.</li>
         </ul>
 
-        <h2>FAQ</h2>
-        {faqItems.map((f) => (
+        <h2>{chrome.faqHeading}</h2>
+        {post.faqItems.map((f) => (
           <details>
             <summary>{f.question}</summary>
             <p>{f.answer}</p>
           </details>
         ))}
 
-        <h2>Try it now</h2>
-        <p>Create your own vCard QR code in 60 seconds. <a href="/vcard-qr-code">Generate a vCard QR code →</a></p>
+        <p class="cta">Create your own vCard QR code in 60 seconds. <a href="/vcard-qr-code">Generate a vCard QR code →</a></p>
       </div>
     </div>
   </article>
@@ -116,14 +102,32 @@ const faqItems = [
 
 <style>
   .blog-post { padding: var(--space-lg) 0; }
-  .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
-  .blog-meta { color: #777; font-size: 0.875rem; margin-bottom: var(--space-sm); }
+  .breadcrumbs { max-width: 720px; margin: 0 auto var(--space-md); font-size: 0.875rem; color: var(--color-fg-soft); }
+  .breadcrumbs a { color: var(--color-fg-soft); }
+  .breadcrumbs a:hover { color: var(--color-accent-strong); }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-lg); text-align: center; }
+  .blog-meta { color: var(--color-fg-soft); font-size: 0.875rem; margin-bottom: var(--space-sm); }
   .blog-header h1 { font-size: 2.25rem; line-height: 1.2; }
-  .blog-lede { font-size: 1.125rem; color: #555; max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-lede { font-size: 1.125rem; color: var(--color-fg-soft); max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-body-note {
+    max-width: 720px; margin: 0 auto var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-accent-soft);
+    color: var(--color-accent-strong);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+  }
   .blog-content { max-width: 720px; margin: 0 auto; }
   .blog-content h2 { margin-top: var(--space-xl); }
   .blog-content h3 { margin-top: var(--space-lg); }
   .blog-content p, .blog-content li { font-size: 1.0625rem; line-height: 1.7; }
-  .blog-content details { margin: var(--space-sm) 0; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 4px; background: #fafafa; }
-  .blog-content summary { cursor: pointer; font-weight: 500; }
+  .blog-content details {
+    margin: var(--space-sm) 0; padding: var(--space-md);
+    border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
+  }
+  .blog-content summary { cursor: pointer; font-weight: 600; }
+  .blog-content .cta { margin-top: var(--space-xl); padding: var(--space-md); background: var(--color-accent-soft); border-radius: var(--radius-md); text-align: center; }
+  .blog-content .cta a { font-weight: 600; }
 </style>

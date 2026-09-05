@@ -1,91 +1,108 @@
 ---
 import Base from '@/layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
+import { getBlogPost, blogChrome } from '@/i18n/blog';
 
-const title = 'How to Make a QR Code for WiFi (Step-by-Step Guide, 2026)';
-const description = 'Let guests scan and join your WiFi in seconds. Free, no-app QR code generator with WPA/WPA2/WPA3 support, hidden-SSID option, and printable label template.';
-
-const faqItems = [
-  {
-    question: 'Do WiFi QR codes work on all phones?',
-    answer: 'Native camera apps on iOS 11+ and Android 10+ recognise WiFi QR codes automatically. Older phones need a free scanner app. Windows and macOS laptops also read them through the camera roll or QR scanner utilities.'
-  },
-  {
-    question: 'Is it safe to share my WiFi password via a QR code?',
-    answer: 'The QR code is just a visual encoding of your SSID and password. Anyone who scans it can join your network, so only print or share it with trusted people. Unlike cloud-shared passwords, the QR code never leaves your device—our generator runs entirely in your browser.'
-  },
-  {
-    question: 'Does it support WPA3 and hidden SSIDs?',
-    answer: 'Yes. Our generator supports WPA, WPA2, WPA3, WEP, and no-password networks. You can also enable a hidden-SSID flag for networks that do not broadcast their name; the phone will then join using the SSID embedded in the QR code.'
-  },
-  {
-    question: 'Can I print the WiFi QR code on a sticker or sign?',
-    answer: 'Yes. Download the SVG for crisp printing at any size, or PNG at 1024px for standard 4×6 inch guest-network cards. The QR code remains scannable down to about 1 inch (2.5 cm) square, so it fits on a fridge magnet, a hotel-room card, or a café table tent.'
-  },
-  {
-    question: 'Will the QR code expire or stop working?',
-    answer: 'No. WiFi QR codes contain a static payload (network name + password + security type). They work forever unless you change the password—then you need a new QR code. There is no server-side token to expire.'
-  }
-];
-
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://qrcodegen-9qi.pages.dev/' },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://qrcodegen-9qi.pages.dev/blog/' },
-    { '@type': 'ListItem', position: 3, name: 'How to make a QR code for WiFi', item: 'https://qrcodegen-9qi.pages.dev/blog/how-to-make-qr-code-for-wifi/' }
-  ]
-};
-
+const locale = getLocaleFromUrl(Astro.url, Astro.currentLocale);
+const post = getBlogPost('how-to-make-qr-code-for-wifi', locale);
+const chrome = blogChrome[locale];
 ---
-<Base title={title} description={description} schema="faq" faqItems={faqItems}>
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbSchema)} />
 
+<Base title={post.title} description={post.description} schema="faq" faqItems={post.faqItems}>
   <article class="blog-post">
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> › <a href="/blog/">Blog</a> › <span>WiFi QR code</span>
-    </nav>
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">{chrome.home}</a> › <a href="/blog/">{chrome.blog}</a> › <span>{post.breadcrumb}</span>
+      </nav>
 
-    <h1>How to Make a QR Code for WiFi: The Complete 2026 Guide</h1>
-    <p class="meta">Published September 5, 2026 · 4 min read</p>
+      <header class="blog-header">
+        <p class="blog-meta">{post.meta}</p>
+        <h1>{post.h1}</h1>
+        <p class="blog-lede">{post.lede}</p>
+      </header>
 
-    <p>Tired of spelling out your WiFi password letter-by-letter to every guest? A <strong>WiFi QR code</strong> lets visitors join your network with a single scan from their phone camera—no typing, no app, no mistakes. This guide shows you how to create one in under 30 seconds, plus the small print about security, hidden SSIDs, and printing it on a sticker.</p>
+      {post.bodyNote && (
+        <p class="blog-body-note">{post.bodyNote}</p>
+      )}
 
-    <h2>What is a WiFi QR code?</h2>
-    <p>A WiFi QR code is a regular QR code that encodes a WiFi network configuration string in the <code>WIFI:T:WPA;S:mynetwork;P:mypassword;;</code> format. When a modern phone camera reads it, the OS recognises the prefix, prompts "Join this WiFi network?", and connects the user automatically—password included.</p>
+      <div class="blog-content">
+        <p>Tired of spelling out your WiFi password letter-by-letter to every guest? A <strong>WiFi QR code</strong> lets visitors join your network with a single scan from their phone camera—no typing, no app, no mistakes. This guide shows you how to create one in under 30 seconds, plus the small print about security, hidden SSIDs, and printing it on a sticker.</p>
 
-    <h2>Step-by-step: generate your WiFi QR code</h2>
-    <ol>
-      <li>Open our free <a href="/wifi-qr-code-generator/">WiFi QR code generator</a> in any browser.</li>
-      <li>Type your <strong>network name (SSID)</strong>. Tick "Hidden network" if you do not broadcast it.</li>
-      <li>Choose the <strong>security type</strong>: WPA2/WPA3 for modern routers, WPA for older gear, WEP for legacy, or None for open networks.</li>
-      <li>Enter the <strong>password</strong>. Nothing is sent to a server—the page runs locally.</li>
-      <li>Click <strong>Download PNG</strong> for a print-ready image or <strong>Download SVG</strong> for a vector file you can scale to any size.</li>
-    </ol>
-    <p>That's it. The whole flow takes about 20 seconds on a desktop and 30 seconds on a phone.</p>
+        <h2>What is a WiFi QR code?</h2>
+        <p>A WiFi QR code is a regular QR code that encodes a WiFi network configuration string in the <code>WIFI:T:WPA;S:mynetwork;P:mypassword;;</code> format. When a modern phone camera reads it, the OS recognises the prefix, prompts "Join this WiFi network?", and connects the user automatically—password included.</p>
 
-    <h2>Which phones scan WiFi QR codes natively?</h2>
-    <p>All modern phones support it without a third-party app:</p>
-    <ul>
-      <li><strong>iPhone:</strong> iOS 11 and later. Open the Camera app, point at the QR code, and tap the WiFi banner.</li>
-      <li><strong>Android:</strong> Android 10 and later, plus Samsung One UI 2.0+. Google Lens also works on Android 8 and 9.</li>
-      <li><strong>iPad:</strong> iPadOS 13+ when using the Camera app on a 2020-or-later iPad Pro.</li>
-      <li><strong>Laptops:</strong> Windows 11 camera app reads them, and macOS Sonoma+ does too via Visual Lookup.</li>
-    </ul>
-    <p>For older phones, a free scanner app (e.g., Google's "Google Lens" or any QR reader) will read the code and offer to copy the password—manual join is still a one-tap process.</p>
+        <h2>Step-by-step: generate your WiFi QR code</h2>
+        <ol>
+          <li>Open our free <a href="/wifi-qr-code-generator/">WiFi QR code generator</a> in any browser.</li>
+          <li>Type your <strong>network name (SSID)</strong>. Tick "Hidden network" if you do not broadcast it.</li>
+          <li>Choose the <strong>security type</strong>: WPA2/WPA3 for modern routers, WPA for older gear, WEP for legacy, or None for open networks.</li>
+          <li>Enter the <strong>password</strong>. Nothing is sent to a server—the page runs locally.</li>
+          <li>Click <strong>Download PNG</strong> for a print-ready image or <strong>Download SVG</strong> for a vector file you can scale to any size.</li>
+        </ol>
+        <p>That's it. The whole flow takes about 20 seconds on a desktop and 30 seconds on a phone.</p>
 
-    <h2>What about hidden SSIDs and WPA3?</h2>
-    <p>Both are first-class features in our generator. Hidden networks need a flag because the phone cannot auto-discover them—without the flag, the join fails silently. WPA3-personal uses the same <code>WPA</code> token as WPA2 in the QR payload; phones negotiate the strongest mutual version automatically.</p>
+        <h2>Which phones scan WiFi QR codes natively?</h2>
+        <p>All modern phones support it without a third-party app:</p>
+        <ul>
+          <li><strong>iPhone:</strong> iOS 11 and later. Open the Camera app, point at the QR code, and tap the WiFi banner.</li>
+          <li><strong>Android:</strong> Android 10 and later, plus Samsung One UI 2.0+. Google Lens also works on Android 8 and 9.</li>
+          <li><strong>iPad:</strong> iPadOS 13+ when using the Camera app on a 2020-or-later iPad Pro.</li>
+          <li><strong>Laptops:</strong> Windows 11 camera app reads them, and macOS Sonoma+ does too via Visual Lookup.</li>
+        </ul>
+        <p>For older phones, a free scanner app (e.g., Google's "Google Lens" or any QR reader) will read the code and offer to copy the password—manual join is still a one-tap process.</p>
 
-    <h2>Print it: sizing and materials</h2>
-    <p>QR codes remain scannable down to about 1 inch (2.5 cm) square, so a fridge magnet, hotel-room key card, or café table tent is plenty of room. For outdoor use, laminate the sticker or print on vinyl—UV and water degrade the contrast over months. If you want to add branding, download the SVG and place it in Canva, Figma, or Illustrator.</p>
+        <h2>What about hidden SSIDs and WPA3?</h2>
+        <p>Both are first-class features in our generator. Hidden networks need a flag because the phone cannot auto-discover them—without the flag, the join fails silently. WPA3-personal uses the same <code>WPA</code> token as WPA2 in the QR payload; phones negotiate the strongest mutual version automatically.</p>
 
-    <h2>Security: should I worry?</h2>
-    <p>The QR code is just a picture of your network name and password. Anyone who can see the code can join your network, so treat it like a written password. Do not post it on a public-facing website. For guest networks, isolate them from your main LAN via router guest-mode so visitors only get internet access.</p>
+        <h2>Print it: sizing and materials</h2>
+        <p>QR codes remain scannable down to about 1 inch (2.5 cm) square, so a fridge magnet, hotel-room key card, or café table tent is plenty of room. For outdoor use, laminate the sticker or print on vinyl—UV and water degrade the contrast over months. If you want to add branding, download the SVG and place it in Canva, Figma, or Illustrator.</p>
 
-    <h2>Frequently asked questions</h2>
-    <p>See the FAQ block below for more answers on compatibility, expiration, and hidden-SSID behaviour.</p>
+        <h2>Security: should I worry?</h2>
+        <p>The QR code is just a picture of your network name and password. Anyone who can see the code can join your network, so treat it like a written password. Do not post it on a public-facing website. For guest networks, isolate them from your main LAN via router guest-mode so visitors only get internet access.</p>
 
-    <p class="cta">Ready to make yours? <a href="/wifi-qr-code-generator/">Generate a WiFi QR code now →</a></p>
+        <h2>{chrome.faqHeading}</h2>
+        {post.faqItems.map((f) => (
+          <details>
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+
+        <p class="cta">Ready to make yours? <a href="/wifi-qr-code-generator/">Generate a WiFi QR code now →</a></p>
+      </div>
+    </div>
   </article>
 </Base>
+
+<style>
+  .blog-post { padding: var(--space-lg) 0; }
+  .breadcrumbs { max-width: 720px; margin: 0 auto var(--space-md); font-size: 0.875rem; color: var(--color-fg-soft); }
+  .breadcrumbs a { color: var(--color-fg-soft); }
+  .breadcrumbs a:hover { color: var(--color-accent-strong); }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-lg); text-align: center; }
+  .blog-meta { color: var(--color-fg-soft); font-size: 0.875rem; margin-bottom: var(--space-sm); }
+  .blog-header h1 { font-size: 2.25rem; line-height: 1.2; }
+  .blog-lede { font-size: 1.125rem; color: var(--color-fg-soft); max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-body-note {
+    max-width: 720px; margin: 0 auto var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-accent-soft);
+    color: var(--color-accent-strong);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+  }
+  .blog-content { max-width: 720px; margin: 0 auto; }
+  .blog-content h2 { margin-top: var(--space-xl); }
+  .blog-content h3 { margin-top: var(--space-lg); }
+  .blog-content p, .blog-content li { font-size: 1.0625rem; line-height: 1.7; }
+  .blog-content details {
+    margin: var(--space-sm) 0; padding: var(--space-md);
+    border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
+  }
+  .blog-content summary { cursor: pointer; font-weight: 600; }
+  .blog-content code { background: var(--color-accent-soft); color: var(--color-accent-strong); padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+  .blog-content .cta { margin-top: var(--space-xl); padding: var(--space-md); background: var(--color-accent-soft); border-radius: var(--radius-md); text-align: center; }
+  .blog-content .cta a { font-weight: 600; }
+</style>

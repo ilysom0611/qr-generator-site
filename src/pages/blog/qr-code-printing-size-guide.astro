@@ -1,133 +1,92 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
+import { getBlogPost, blogChrome } from '@/i18n/blog';
 
-const faqItems = [
-  {
-    question: 'What is the smallest QR code that still scans?',
-    answer: 'A QR code smaller than about 1cm × 1cm (0.4 inches) is hard to scan with a phone camera, regardless of the data it contains. Below 0.5cm, most scanners fail. Aim for at least 1.5-2cm for short URLs.'
-  },
-  {
-    question: 'Does print size depend on the scan distance?',
-    answer: 'Yes. As a rule of thumb, the QR code width should be at least 1/10th of the scan distance. A code meant to be scanned from 1 meter away should be at least 10cm wide. From 5 meters away: at least 50cm.'
-  },
-  {
-    question: 'What DPI should I print at?',
-    answer: 'For print, 300 DPI is standard. Export your QR code as SVG (vector) to print at any size without quality loss. If you must use PNG, export at 600+ DPI for the final print size.'
-  },
-  {
-    question: 'Can I print a QR code on fabric or curved surfaces?',
-    answer: 'Yes, but test first. Curved surfaces (water bottles, mugs) reduce scannability because the code distorts. Use H error correction and test on the actual object. Embroidery on fabric works but requires a high-resolution version and H error correction.'
-  },
-  {
-    question: 'How much white space do I need around the QR code?',
-    answer: 'A "quiet zone" of at least 4 modules of white space around all sides. For a 2cm QR code, that means at least 0.5cm of empty white space on each side. Without this margin, scanners often fail.'
-  }
-];
-
+const locale = getLocaleFromUrl(Astro.url, Astro.currentLocale);
+const post = getBlogPost('qr-code-printing-size-guide', locale);
+const chrome = blogChrome[locale];
 ---
-<Base
-  title="QR Code Printing Size Guide: Minimum Sizes & Best Practices"
-  description="What's the smallest QR code you can print? How big should it be for poster, business card, or billboard? Print DPI, quiet zones, and distance rules."
-  schema="faq"
-  faqItems={faqItems}>
+
+<Base title={post.title} description={post.description} schema="faq" faqItems={post.faqItems}>
   <article class="blog-post">
     <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">{chrome.home}</a> › <a href="/blog/">{chrome.blog}</a> › <span>{post.breadcrumb}</span>
+      </nav>
+
       <header class="blog-header">
-        <p class="blog-meta">Reference · 5 min read</p>
-        <h1>QR Code Printing Size Guide: Minimum Sizes & Best Practices</h1>
-        <p class="blog-lede">A QR code too small won't scan. A QR code too big wastes space. Here's the exact size you need for every common use case — and the print settings that make it work.</p>
+        <p class="blog-meta">{post.meta}</p>
+        <h1>{post.h1}</h1>
+        <p class="blog-lede">{post.lede}</p>
       </header>
 
+      {post.bodyNote && (
+        <p class="blog-body-note">{post.bodyNote}</p>
+      )}
+
       <div class="blog-content">
-        <p>Print a QR code too small and nobody can scan it. Print it too big and you've wasted half your poster. The sweet spot depends on three things: the size of the data (longer URLs need bigger codes), the scan distance, and the print quality.</p>
+        <p>The single most common reason printed QR codes fail to scan is being printed too small. Not "the generator made a bad code" — the code is fine, the print shop just shrunk it below the scanner's working range. This guide gives you concrete minimum sizes for every common use case.</p>
 
-        <h2>The 1/10 rule</h2>
-        <p>As a rough starting point: the QR code's width should be at least <strong>1/10th of the distance from which it will be scanned</strong>.</p>
+        <h2>The 1:10 rule of QR code scanning</h2>
+        <p>Rule of thumb: a QR code needs to be at least <strong>1/10th the distance from which it'll be scanned</strong>. Scanning distance of 100 cm (about arm's length) → minimum 10 cm wide. Scanning distance of 1 m → minimum 10 cm. Scanning distance of 5 m → minimum 50 cm.</p>
+        <p>This is the floor. For reliable scanning — accounting for shaky hands, awkward angles, low-end phones — go 20-30% larger than the minimum.</p>
+
+        <h2>Minimum sizes by use case</h2>
+        <h3>Business card (scan distance ~15 cm)</h3>
+        <p>Minimum <strong>1.5 × 1.5 cm</strong> (about 0.6 × 0.6 inches). Recommended <strong>2 × 2 cm</strong>. Place on the back of the card or in a corner of the front, with a quiet zone of at least 4 modules of white space around it.</p>
+        <h3>Restaurant table tent / menu (scan distance ~30 cm)</h3>
+        <p>Minimum <strong>3 × 3 cm</strong>. Recommended <strong>4 × 4 cm</strong>. Laminate for wipe-clean.</p>
+        <h3>Product packaging (scan distance ~20-50 cm)</h3>
+        <p>Minimum <strong>2.5 × 2.5 cm</strong>. Recommended <strong>4 × 4 cm</strong> or larger. The bigger the better — packaging gets tossed, dropped, and viewed from awkward angles.</p>
+        <h3>Poster / flyer (scan distance ~1-2 m)</h3>
+        <p>Minimum <strong>15 × 15 cm</strong> for 1 m scan distance. Recommended <strong>20 × 20 cm</strong> or larger. For a poster scanned at 3 m, go at least 40 × 40 cm.</p>
+        <h3>Billboard / outdoor signage (scan distance 5+ m)</h3>
+        <p>Minimum <strong>50 × 50 cm</strong> for 5 m scan distance. For 10 m scan distance, minimum 1 m × 1 m. Outdoor codes should also use H (30%) error correction to handle UV, rain, and physical damage.</p>
+        <h3>Conference badge / lanyard (scan distance ~30 cm)</h3>
+        <p>Minimum <strong>3 × 3 cm</strong>. Recommended <strong>4 × 4 cm</strong>. The badge will be flipped and twisted — make it large enough to scan without precise alignment.</p>
+
+        <h2>The "quiet zone" — the white border you must not crop</h2>
+        <p>A QR code needs a clear white border on all four sides, called the "quiet zone." The minimum is <strong>4 modules wide</strong> (where one module is one black square in the code). Many designers crop this in the name of "clean design" — the code then fails to scan on some phones.</p>
+        <p>When you place a QR code in a layout, give it 4-module padding on every side. Most generators (including ours) include the quiet zone in the exported image, so you don't need to add it yourself — just don't crop it off.</p>
+
+        <h2>Resolution: what DPI to export</h2>
+        <p>For print, export at <strong>300 DPI minimum</strong>. For large-format prints (posters, billboards), 150 DPI is acceptable if the source SVG is high-quality.</p>
+        <p>When in doubt, export as <strong>SVG</strong> (vector). The print shop can scale it to any size without losing sharpness. Our generator supports SVG download.</p>
+
+        <h2>Print materials: how to choose</h2>
+        <p>Material choice affects durability, not scannability. The code scans the same whether it's on paper, vinyl, or aluminum — as long as the contrast is high.</p>
         <ul>
-          <li>Scanned from 10cm away (business card, menu) → 1cm wide minimum</li>
-          <li>Scanned from 50cm away (countertop sign) → 5cm wide</li>
-          <li>Scanned from 1m away (poster at eye level) → 10cm wide</li>
-          <li>Scanned from 5m away (billboard, exhibition stand) → 50cm wide</li>
-          <li>Scanned from 10m+ away (building facade, stadium) → 1m+ wide</li>
+          <li><strong>Paper (business cards, flyers, menus):</strong> fine for indoor, short-term use. Glossier paper scans better than matte because the gloss keeps the white background clean.</li>
+          <li><strong>Vinyl stickers:</strong> best for outdoor use. Laminated vinyl survives 1-3 years outdoors.</li>
+          <li><strong>Aluminum / metal signs:</strong> for permanent outdoor or industrial installations. Most durable option.</li>
+          <li><strong>Acrylic / plastic:</strong> for retail, restaurants, and reusable signage. Easy to clean.</li>
         </ul>
-        <p>These are minimums. Going 1.5-2x larger is always safer.</p>
+        <p>Avoid reflective materials (mirror-finish, glossy metallics) — they confuse the scanner. If you must use a reflective surface, request a matte laminate.</p>
 
-        <h2>Size chart by use case</h2>
-        <table style="width:100%; border-collapse: collapse; margin: var(--space-lg) 0;">
-          <thead>
-            <tr style="background: #f4f4f4;">
-              <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Use case</th>
-              <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Minimum size</th>
-              <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Recommended</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;">Business card</td><td style="padding: 8px; border: 1px solid #ddd;">1.5 × 1.5 cm</td><td style="padding: 8px; border: 1px solid #ddd;">2 × 2 cm</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;">Restaurant menu</td><td style="padding: 8px; border: 1px solid #ddd;">2 × 2 cm</td><td style="padding: 8px; border: 1px solid #ddd;">3 × 3 cm</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;">Product packaging</td><td style="padding: 8px; border: 1px solid #ddd;">1.5 × 1.5 cm</td><td style="padding: 8px; border: 1px solid #ddd;">2.5 × 2.5 cm</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;">Poster (A3)</td><td style="padding: 8px; border: 1px solid #ddd;">5 × 5 cm</td><td style="padding: 8px; border: 1px solid #ddd;">8 × 8 cm</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;">Storefront window</td><td style="padding: 8px; border: 1px solid #ddd;">15 × 15 cm</td><td style="padding: 8px; border: 1px solid #ddd;">25 × 25 cm</td></tr>
-            <tr><td style="padding: 8px; border: 1px solid #ddd;">Billboard</td><td style="padding: 8px; border: 1px solid #ddd;">1 × 1 m</td><td style="padding: 8px; border: 1px solid #ddd;">2 × 2 m</td></tr>
-          </tbody>
-        </table>
-
-        <h2>The quiet zone</h2>
-        <p>A QR code needs empty white space around it — at least <strong>4 modules of white border</strong> on every side. Without this margin, the scanner can't tell where the code ends and the design begins, and scanning fails.</p>
-        <p>For a 2cm code, that's about 0.5cm of white space on each side. Many printers and designers don't know this rule and crop the margin. Always include it explicitly in your design.</p>
-
-        <h2>Print quality</h2>
-        <p>Three print-quality considerations:</p>
-        <h3>1. Use vector format when possible</h3>
-        <p>Export the QR code as <strong>SVG</strong> (vector). It scales infinitely without quality loss. Best for print at any size.</p>
-        <h3>2. For PNG: export at 600+ DPI</h3>
-        <p>If you must use a raster format, export at the final print resolution. For a 2cm × 2cm printed code at 300 DPI, you need a 600×600 pixel PNG minimum. For a 20cm code at 300 DPI, you need 2400×2400px. Generous is better than stingy.</p>
-        <h3>3. Don't downscale a small image</h3>
-        <p>If you generate the code at 200px and then stretch it to fill a billboard, you'll see every pixel. Always start with high resolution or use SVG.</p>
-
-        <h2>Material considerations</h2>
-        <h3>Paper / card</h3>
-        <p>Works fine. Avoid very reflective or metallic finishes — they can interfere with scanners.</p>
-        <h3>Plastic / laminated</h3>
-        <p>Works well. Matte lamination is more scannable than glossy.</p>
-        <h3>Glass / acrylic</h3>
-        <p>Test on the actual surface. Transparent backgrounds and reflections can confuse scanners.</p>
-        <h3>Fabric / clothing</h3>
-        <p>Works if printed clearly with H error correction. Embroidery is fine but needs high resolution.</p>
-        <h3>Metal / outdoor</h3>
-        <p>Use H error correction. Avoid reflective metals — they scatter the scan laser.</p>
-        <h3>Curved surfaces (bottles, mugs)</h3>
-        <p>Test on the actual curve. A 10% distortion can break a code. Use H error correction and consider shortening the URL.</p>
-
-        <h2>Color considerations</h2>
-        <p>The QR code's contrast matters more than the colors. Rules:</p>
+        <h2>Color and contrast</h2>
+        <p>The QR scanner reads <strong>contrast</strong>, not specific colors. The dark modules must be at least 70% darker than the light modules. Standard black on white is the safest. Other combinations that work:</p>
         <ul>
-          <li><strong>Dark on light.</strong> Black on white is the safest. Dark blue on white works. Dark green on white works.</li>
-          <li><strong>Avoid light-on-light.</strong> White on yellow fails because there's not enough contrast.</li>
-          <li><strong>Light-on-dark can work</strong> (white on black), but some scanners struggle. Test before printing in volume.</li>
-          <li><strong>Avoid gradients.</strong> Solid colors only. Gradients confuse scanners.</li>
+          <li>Dark blue on white</li>
+          <li>Black on yellow</li>
+          <li>White on black (inverted — works, but some older scanners struggle)</li>
+          <li>Dark green on light beige</li>
         </ul>
+        <p>Avoid: light-on-light, similar-value colors, gradients, low-contrast pairs (red on orange, blue on purple).</p>
 
-        <h2>Testing before mass printing</h2>
-        <p>Before printing 1000 business cards or 10,000 product boxes, test the QR code:</p>
-        <ol>
-          <li>Print one sample at the final intended size.</li>
-          <li>Test it on at least three different phones (iPhone, Android, multiple OS versions).</li>
-          <li>Test under the actual lighting conditions.</li>
-          <li>Test at the expected scan distance.</li>
-          <li>Test after a few weeks of wear if relevant.</li>
-        </ol>
-        <p>Five minutes of testing can save a re-print run that costs thousands.</p>
+        <h2>Test before you print 1,000</h2>
+        <p>Print <strong>one</strong> copy first. Scan it with at least two different phones. Test in different lighting conditions (sun, shade, indoor, low light). Test at the angle users will actually scan from. If it scans reliably, then go to full print run.</p>
+        <p>Cost of one test print: $0.50. Cost of reprinting 1,000 flyers: $300. The math is obvious.</p>
 
-        <h2>FAQ</h2>
-        {faqItems.map((f) => (
+        <h2>{chrome.faqHeading}</h2>
+        {post.faqItems.map((f) => (
           <details>
             <summary>{f.question}</summary>
             <p>{f.answer}</p>
           </details>
         ))}
 
-        <h2>Try it now</h2>
-        <p>Generate a print-ready QR code. Export as SVG for sharp scaling at any size. <a href="/">Generate a QR code →</a></p>
+        <p class="cta">Generate a print-ready QR code (SVG, 300 DPI, H error correction available). <a href="/#type=customize">Make a print-ready QR code →</a></p>
       </div>
     </div>
   </article>
@@ -135,14 +94,32 @@ const faqItems = [
 
 <style>
   .blog-post { padding: var(--space-lg) 0; }
-  .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
-  .blog-meta { color: #777; font-size: 0.875rem; margin-bottom: var(--space-sm); }
+  .breadcrumbs { max-width: 720px; margin: 0 auto var(--space-md); font-size: 0.875rem; color: var(--color-fg-soft); }
+  .breadcrumbs a { color: var(--color-fg-soft); }
+  .breadcrumbs a:hover { color: var(--color-accent-strong); }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-lg); text-align: center; }
+  .blog-meta { color: var(--color-fg-soft); font-size: 0.875rem; margin-bottom: var(--space-sm); }
   .blog-header h1 { font-size: 2.25rem; line-height: 1.2; }
-  .blog-lede { font-size: 1.125rem; color: #555; max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-lede { font-size: 1.125rem; color: var(--color-fg-soft); max-width: 640px; margin: var(--space-md) auto 0; }
+  .blog-body-note {
+    max-width: 720px; margin: 0 auto var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-accent-soft);
+    color: var(--color-accent-strong);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+  }
   .blog-content { max-width: 720px; margin: 0 auto; }
   .blog-content h2 { margin-top: var(--space-xl); }
   .blog-content h3 { margin-top: var(--space-lg); }
   .blog-content p, .blog-content li { font-size: 1.0625rem; line-height: 1.7; }
-  .blog-content details { margin: var(--space-sm) 0; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 4px; background: #fafafa; }
-  .blog-content summary { cursor: pointer; font-weight: 500; }
+  .blog-content details {
+    margin: var(--space-sm) 0; padding: var(--space-md);
+    border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
+  }
+  .blog-content summary { cursor: pointer; font-weight: 600; }
+  .blog-content .cta { margin-top: var(--space-xl); padding: var(--space-md); background: var(--color-accent-soft); border-radius: var(--radius-md); text-align: center; }
+  .blog-content .cta a { font-weight: 600; }
 </style>

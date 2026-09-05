@@ -1,70 +1,220 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getLocaleFromUrl, getLocalizedPath } from '@/i18n/utils';
+import { defaultLocale } from '@/i18n/config';
 
-const posts = [
-  {
-    slug: 'how-to-make-qr-code-for-wifi',
-    title: 'How to Make a QR Code for WiFi (Step-by-Step Guide)',
-    description: 'Create a WiFi QR code in 30 seconds. Guests scan and connect — no password typing.',
-    readTime: '4 min',
-    date: '2026-09-05'
+const locale = getLocaleFromUrl(Astro.url, Astro.currentLocale);
+
+// Per-locale metadata + descriptions for each post. Body content stays English in v1
+// (full prose translation is a follow-up); titles/descriptions/dates are localized so the
+// listing page reads correctly when a visitor lands on /cn/blog/ or /th/blog/.
+const postsByLocale: Record<string, Array<{
+  slug: string;
+  title: string;
+  description: string;
+  readTime: string;
+  date: string;
+}>> = {
+  en: [
+    {
+      slug: 'how-to-make-qr-code-for-wifi',
+      title: 'How to Make a QR Code for WiFi (Step-by-Step Guide)',
+      description: 'Create a WiFi QR code in 30 seconds. Guests scan and connect — no password typing.',
+      readTime: '4 min',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'how-to-create-vcard-qr-code',
+      title: 'How to Create a vCard QR Code (Digital Business Card Guide)',
+      description: "Encode your contact info so one scan adds you to someone's phone.",
+      readTime: '5 min',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'qr-code-error-correction-explained',
+      title: 'QR Code Error Correction Levels Explained (L, M, Q, H)',
+      description: 'When to use each level. How Reed-Solomon codes make QR codes damage-proof.',
+      readTime: '4 min',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'how-to-add-logo-to-qr-code',
+      title: 'How to Add a Logo to a QR Code (Without Breaking It)',
+      description: 'Size, error correction, contrast — everything for a scannable branded QR.',
+      readTime: '5 min',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'static-vs-dynamic-qr-codes',
+      title: "Static vs Dynamic QR Codes: What's the Difference?",
+      description: 'Free or subscription? Privacy and reliability trade-offs compared.',
+      readTime: '4 min',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'qr-code-printing-size-guide',
+      title: 'QR Code Printing Size Guide: Minimum Sizes & Best Practices',
+      description: "What's the smallest QR code you can print? Sizes for business cards to billboards.",
+      readTime: '5 min',
+      date: '2026-09-05'
+    }
+  ],
+  cn: [
+    {
+      slug: 'how-to-make-qr-code-for-wifi',
+      title: '如何制作 WiFi 二维码（分步指南）',
+      description: '30 秒生成 WiFi 二维码,客人扫码即可连接 — 无需输入密码。',
+      readTime: '4 分钟',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'how-to-create-vcard-qr-code',
+      title: '如何制作电子名片二维码（数字名片指南）',
+      description: '把你的联系方式编进二维码,扫一次就存入对方手机。',
+      readTime: '5 分钟',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'qr-code-error-correction-explained',
+      title: '二维码纠错级别详解（L、M、Q、H）',
+      description: '什么时候该用哪个?Reed-Solomon 如何让二维码抗损坏。',
+      readTime: '4 分钟',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'how-to-add-logo-to-qr-code',
+      title: '如何给二维码添加 Logo（同时保证可扫描）',
+      description: '尺寸、纠错、对比度 — 打造可扫描的品牌二维码的全部要点。',
+      readTime: '5 分钟',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'static-vs-dynamic-qr-codes',
+      title: '静态二维码 vs 动态二维码:有什么区别?',
+      description: '免费还是付费?对比隐私与可靠性之间的取舍。',
+      readTime: '4 分钟',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'qr-code-printing-size-guide',
+      title: '二维码印刷尺寸指南:最小尺寸与最佳实践',
+      description: '二维码最小能印多大?从名片到广告牌的尺寸建议。',
+      readTime: '5 分钟',
+      date: '2026-09-05'
+    }
+  ],
+  th: [
+    {
+      slug: 'how-to-make-qr-code-for-wifi',
+      title: 'วิธีสร้าง QR Code สำหรับ WiFi (คำแนะนำทีละขั้นตอน)',
+      description: 'สร้าง QR Code สำหรับ WiFi ใน 30 วินาที แขกสแกนแล้วเชื่อมต่อได้ทันที — ไม่ต้องพิมพ์รหัสผ่าน',
+      readTime: '4 นาที',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'how-to-create-vcard-qr-code',
+      title: 'วิธีสร้าง QR Code นามบัตร (คำแนะนำนามบัตรดิจิทัล)',
+      description: 'เข้ารหัสข้อมูลติดต่อของคุณ แค่สแกนครั้งเดียวก็เพิ่มลงในโทรศัพท์ของผู้อื่นได้',
+      readTime: '5 นาที',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'qr-code-error-correction-explained',
+      title: 'อธิบายระดับการแก้ไขข้อผิดพลาดของ QR Code (L, M, Q, H)',
+      description: 'ควรใช้ระดับใดเมื่อใด และ Reed-Solomon ทำให้ QR Code ทนต่อความเสียหายได้อย่างไร',
+      readTime: '4 นาที',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'how-to-add-logo-to-qr-code',
+      title: 'วิธีเพิ่มโลโก้ลงใน QR Code (โดยไม่ทำให้สแกนไม่ได้)',
+      description: 'ขนาด การแก้ไขข้อผิดพลาด ความคมชัด — ทุกสิ่งที่ต้องรู้เพื่อสร้าง QR Code แบรนด์ที่สแกนได้',
+      readTime: '5 นาที',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'static-vs-dynamic-qr-codes',
+      title: 'QR Code แบบ Static vs Dynamic: ต่างกันอย่างไร?',
+      description: 'ฟรีหรือสมัครสมาชิก? เปรียบเทียบข้อดีข้อเสียด้านความเป็นส่วนตัวและความน่าเชื่อถือ',
+      readTime: '4 นาที',
+      date: '2026-09-05'
+    },
+    {
+      slug: 'qr-code-printing-size-guide',
+      title: 'คำแนะนำขนาดการพิมพ์ QR Code: ขนาดเล็กที่สุดและแนวปฏิบัติที่ดีที่สุด',
+      description: 'QR Code ที่เล็กที่สุดที่พิมพ์ได้คือเท่าไหร่? ขนาดตั้งแต่นามบัตรไปจนถึงป้ายโฆษณา',
+      readTime: '5 นาที',
+      date: '2026-09-05'
+    }
+  ]
+};
+
+const posts = postsByLocale[locale] ?? postsByLocale.en;
+
+const titleByLocale: Record<string, { title: string; description: string; h1: string; intro: string; cta: string; publishedOn: string }> = {
+  en: {
+    title: 'QR Code Guides & Tutorials — Free QR Code Generator Blog',
+    description: 'Practical guides on QR codes: WiFi sharing, vCard business cards, error correction, logos, static vs dynamic, and printing sizes.',
+    h1: 'QR Code Guides & Tutorials',
+    intro: 'Everything you need to know about creating, sharing, and using QR codes — written for real people, not engineers.',
+    cta: 'Read more →',
+    publishedOn: 'Published'
   },
-  {
-    slug: 'how-to-create-vcard-qr-code',
-    title: "How to Create a vCard QR Code (Digital Business Card Guide)",
-    description: 'Encode your contact info so one scan adds you to someone\'s phone.',
-    readTime: '5 min',
-    date: '2026-09-05'
+  cn: {
+    title: '二维码指南与教程 — 免费二维码生成器博客',
+    description: '实用的二维码指南:WiFi 共享、电子名片、纠错、Logo、静态与动态对比、印刷尺寸。',
+    h1: '二维码指南与教程',
+    intro: '关于二维码的创建、分享与使用,你需要知道的一切 — 写给普通人,而不是工程师。',
+    cta: '阅读全文 →',
+    publishedOn: '发布于'
   },
-  {
-    slug: 'qr-code-error-correction-explained',
-    title: 'QR Code Error Correction Levels Explained (L, M, Q, H)',
-    description: 'When to use each level. How Reed-Solomon codes make QR codes damage-proof.',
-    readTime: '4 min',
-    date: '2026-09-05'
-  },
-  {
-    slug: 'how-to-add-logo-to-qr-code',
-    title: 'How to Add a Logo to a QR Code (Without Breaking It)',
-    description: 'Size, error correction, contrast — everything for a scannable branded QR.',
-    readTime: '5 min',
-    date: '2026-09-05'
-  },
-  {
-    slug: 'static-vs-dynamic-qr-codes',
-    title: "Static vs Dynamic QR Codes: What's the Difference?",
-    description: 'Free or subscription? Privacy and reliability trade-offs compared.',
-    readTime: '4 min',
-    date: '2026-09-05'
-  },
-  {
-    slug: 'qr-code-printing-size-guide',
-    title: 'QR Code Printing Size Guide: Minimum Sizes & Best Practices',
-    description: "What's the smallest QR code you can print? Sizes for business cards to billboards.",
-    readTime: '5 min',
-    date: '2026-09-05'
+  th: {
+    title: 'คำแนะนำและบทช่วยสอน QR Code — บล็อกเครื่องสร้าง QR Code ฟรี',
+    description: 'คำแนะนำเชิงปฏิบัติเกี่ยวกับ QR Code: การแชร์ WiFi, นามบัตรดิจิทัล, การแก้ไขข้อผิดพลาด, โลโก้, Static vs Dynamic และขนาดการพิมพ์',
+    h1: 'คำแนะนำและบทช่วยสอน QR Code',
+    intro: 'ทุกสิ่งที่คุณต้องรู้เกี่ยวกับการสร้าง แชร์ และใช้งาน QR Code — เขียนสำหรับคนทั่วไป ไม่ใช่วิศวกร',
+    cta: 'อ่านต่อ →',
+    publishedOn: 'เผยแพร่เมื่อ'
   }
-];
+};
 
+const meta = titleByLocale[locale] ?? titleByLocale.en;
+
+// Date format that respects locale conventions
+const formattedPosts = posts.map((p) => {
+  let dateLabel = p.date;
+  try {
+    const d = new Date(p.date + 'T00:00:00Z');
+    dateLabel = d.toLocaleDateString(locale === 'cn' ? 'zh-CN' : locale === 'th' ? 'th-TH' : 'en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+  } catch (e) { /* keep raw */ }
+  return { ...p, dateLabel };
+});
+
+// Build a canonical that includes the locale prefix so search engines see distinct URLs.
+const baseUrl = 'https://qrcodegen-9qi.pages.dev';
+const canonicalPath = locale === defaultLocale ? '/blog/' : `/${locale}/blog/`;
 ---
+
 <Base
-  title="QR Code Guides & Tutorials — Free QR Code Generator Blog"
-  description="Practical guides on QR codes: WiFi sharing, vCard business cards, error correction, logos, static vs dynamic, and printing sizes."
-  canonical="https://qrcodegen-9qi.pages.dev/blog/">
+  title={meta.title}
+  description={meta.description}
+  canonical={`${baseUrl}${canonicalPath}`}>
   <article class="blog-index">
     <div class="container">
       <header class="blog-header">
-        <h1>QR Code Guides & Tutorials</h1>
-        <p>Everything you need to know about creating, sharing, and using QR codes — written for real people, not engineers.</p>
+        <h1>{meta.h1}</h1>
+        <p>{meta.intro}</p>
       </header>
 
       <div class="post-grid">
-        {posts.map((post) => (
-          <a href={`/blog/${post.slug}`} class="post-card">
-            <p class="post-meta">{post.date} · {post.readTime} read</p>
+        {formattedPosts.map((post) => (
+          <a href={getLocalizedPath(`/blog/${post.slug}`, locale as any)} class="post-card">
+            <p class="post-meta">{post.dateLabel} · {post.readTime}</p>
             <h2>{post.title}</h2>
             <p>{post.description}</p>
-            <span class="post-cta">Read more →</span>
+            <span class="post-cta">{meta.cta}</span>
           </a>
         ))}
       </div>
@@ -76,12 +226,17 @@ const posts = [
   .blog-index { padding: var(--space-lg) 0; }
   .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
   .blog-header h1 { font-size: 2.5rem; margin-bottom: var(--space-md); }
-  .blog-header p { font-size: 1.125rem; color: #555; }
+  .blog-header p { font-size: 1.125rem; color: var(--color-fg-soft); }
   .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-md); max-width: 1100px; margin: 0 auto; }
-  .post-card { display: block; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 6px; color: var(--color-fg); transition: border-color 0.15s; }
-  .post-card:hover { border-color: var(--color-accent); text-decoration: none; }
-  .post-meta { color: #777; font-size: 0.875rem; margin: 0 0 var(--space-sm); }
+  .post-card {
+    display: block; padding: var(--space-md); border: 1px solid var(--color-border);
+    border-radius: var(--radius-md); color: var(--color-fg);
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    background: var(--color-bg);
+  }
+  .post-card:hover { border-color: var(--color-accent); text-decoration: none; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .post-meta { color: var(--color-fg-soft); font-size: 0.875rem; margin: 0 0 var(--space-sm); }
   .post-card h2 { font-size: 1.25rem; margin: 0 0 var(--space-sm); color: var(--color-fg); }
-  .post-card p { color: #555; margin: 0 0 var(--space-sm); font-size: 0.9375rem; line-height: 1.5; }
-  .post-cta { color: var(--color-accent); font-weight: 500; font-size: 0.9375rem; }
+  .post-card p { color: var(--color-fg-soft); margin: 0 0 var(--space-sm); font-size: 0.9375rem; line-height: 1.5; }
+  .post-cta { color: var(--color-accent-strong); font-weight: 500; font-size: 0.9375rem; }
 </style>
