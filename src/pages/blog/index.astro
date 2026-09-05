@@ -1,0 +1,87 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const posts = [
+  {
+    slug: 'how-to-make-qr-code-for-wifi',
+    title: 'How to Make a QR Code for WiFi (Step-by-Step Guide)',
+    description: 'Create a WiFi QR code in 30 seconds. Guests scan and connect — no password typing.',
+    readTime: '4 min',
+    date: '2026-09-05'
+  },
+  {
+    slug: 'how-to-create-vcard-qr-code',
+    title: "How to Create a vCard QR Code (Digital Business Card Guide)",
+    description: 'Encode your contact info so one scan adds you to someone\'s phone.',
+    readTime: '5 min',
+    date: '2026-09-05'
+  },
+  {
+    slug: 'qr-code-error-correction-explained',
+    title: 'QR Code Error Correction Levels Explained (L, M, Q, H)',
+    description: 'When to use each level. How Reed-Solomon codes make QR codes damage-proof.',
+    readTime: '4 min',
+    date: '2026-09-05'
+  },
+  {
+    slug: 'how-to-add-logo-to-qr-code',
+    title: 'How to Add a Logo to a QR Code (Without Breaking It)',
+    description: 'Size, error correction, contrast — everything for a scannable branded QR.',
+    readTime: '5 min',
+    date: '2026-09-05'
+  },
+  {
+    slug: 'static-vs-dynamic-qr-codes',
+    title: "Static vs Dynamic QR Codes: What's the Difference?",
+    description: 'Free or subscription? Privacy and reliability trade-offs compared.',
+    readTime: '4 min',
+    date: '2026-09-05'
+  },
+  {
+    slug: 'qr-code-printing-size-guide',
+    title: 'QR Code Printing Size Guide: Minimum Sizes & Best Practices',
+    description: "What's the smallest QR code you can print? Sizes for business cards to billboards.",
+    readTime: '5 min',
+    date: '2026-09-05'
+  }
+];
+---
+<Base
+  title="QR Code Guides & Tutorials — Free QR Code Generator Blog"
+  description="Practical guides on QR codes: WiFi sharing, vCard business cards, error correction, logos, static vs dynamic, and printing sizes."
+  canonical="/blog"
+>
+  <article class="blog-index">
+    <div class="container">
+      <header class="blog-header">
+        <h1>QR Code Guides & Tutorials</h1>
+        <p>Everything you need to know about creating, sharing, and using QR codes — written for real people, not engineers.</p>
+      </header>
+
+      <div class="post-grid">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="post-card">
+            <p class="post-meta">{post.date} · {post.readTime} read</p>
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <span class="post-cta">Read more →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .blog-index { padding: var(--space-lg) 0; }
+  .blog-header { max-width: 720px; margin: 0 auto var(--space-xl); text-align: center; }
+  .blog-header h1 { font-size: 2.5rem; margin-bottom: var(--space-md); }
+  .blog-header p { font-size: 1.125rem; color: #555; }
+  .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-md); max-width: 1100px; margin: 0 auto; }
+  .post-card { display: block; padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 6px; color: var(--color-fg); transition: border-color 0.15s; }
+  .post-card:hover { border-color: var(--color-accent); text-decoration: none; }
+  .post-meta { color: #777; font-size: 0.875rem; margin: 0 0 var(--space-sm); }
+  .post-card h2 { font-size: 1.25rem; margin: 0 0 var(--space-sm); color: var(--color-fg); }
+  .post-card p { color: #555; margin: 0 0 var(--space-sm); font-size: 0.9375rem; line-height: 1.5; }
+  .post-cta { color: var(--color-accent); font-weight: 500; font-size: 0.9375rem; }
+</style>
