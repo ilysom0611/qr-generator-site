@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan a Location QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to open the location in your maps app.' },
@@ -18,13 +19,15 @@ const relatedTypes = [
   { slug: 'text-qr-code', label: 'Text QR Code' },
   { slug: 'qr-code-generator', label: 'All QR Code Tools' }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free Location QR Code Generator — Open in Maps"
   description="Create a Location QR code with latitude and longitude. Scanners open the spot in their maps app. 100% private, browser-based."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <section class="landing-hero">
     <div class="container">
       <h1>Free Location QR Code Generator</h1>
