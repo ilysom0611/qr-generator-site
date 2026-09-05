@@ -40,7 +40,7 @@ const breadcrumbSchema = {
 
 const locale = getLocaleFromUrl(Astro.url);
 ---
-<Base title={title} description={description} schema="faq" faqItems={faqItems} locale={locale}>
+<Base title={title} description={description} schema="faq" faqItems={faqItems}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <article class="blog-post">
