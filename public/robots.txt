@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://qr-generator-site.pages.dev/sitemap-index.xml
+Sitemap: https://qrcodegen-9qi.pages.dev/sitemap-index.xml

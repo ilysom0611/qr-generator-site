@@ -3,7 +3,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://qr-generator-site.pages.dev',
+  site: 'https://qrcodegen-9qi.pages.dev',
   integrations: [react(), sitemap()],
   output: 'static',
   build: {
