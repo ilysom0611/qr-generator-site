@@ -23,7 +23,14 @@ const fromUrl: Locale = isLocale(urlSeg) ? urlSeg : defaultLocale;
 const resolvedLocale: Locale = propLocale ?? (Astro.currentLocale as Locale | undefined) ?? fromUrl;
 const t = useTranslations(resolvedLocale);
 
-const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+// Canonical: for non-default locales, reconstruct the original /xx/... URL since
+// Astro.url.pathname is the rewrite target (e.g. "/url-qr-code/" not "/cn/url-qr-code/").
+const rewrittenPath = Astro.url.pathname;
+const localizedPath =
+  resolvedLocale === defaultLocale
+    ? rewrittenPath
+    : '/' + resolvedLocale + (rewrittenPath === '/' ? '' : rewrittenPath);
+const canonicalUrl = canonical ?? new URL(localizedPath, Astro.site).href;
 
 // Absolute URL for OG image (required by Twitter/Facebook/LinkedIn)
 const ogImageUrl = new URL('/og-image.svg', Astro.site).href;
