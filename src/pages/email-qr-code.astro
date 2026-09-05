@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'How do I scan an Email QR code?', answer: 'Open your phone camera, point at the QR. Tap the prompt to open your mail app with the recipient, subject, and body pre-filled.' },
@@ -18,13 +19,15 @@ const relatedTypes = [
   { slug: 'text-qr-code', label: 'Text QR Code' },
   { slug: 'qr-code-generator', label: 'All QR Code Tools' }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free Email QR Code Generator — Pre-fill Subject and Body"
   description="Create an Email QR code with pre-filled recipient, subject, and body. Scanners open their mail app ready to send. 100% private."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <section class="landing-hero">
     <div class="container">
       <h1>Free Email QR Code Generator</h1>
