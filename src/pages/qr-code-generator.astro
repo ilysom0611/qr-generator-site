@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   { question: 'What types of QR codes can I generate?', answer: 'URL, Text, WiFi, vCard, Email, Phone, SMS, and Location. All 8 types are free.' },
@@ -19,13 +20,15 @@ const relatedTypes = [
   { slug: 'location-qr-code', label: 'Location QR Code' },
   { slug: 'text-qr-code', label: 'Text QR Code' }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Free QR Code Generator — 8 Types, 100% Private"
   description="Generate free QR codes for URLs, WiFi, vCards, and more. 100% private, browser-based, no upload. No signup required."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <section class="landing-hero">
     <div class="container">
       <h1>Free QR Code Generator</h1>
