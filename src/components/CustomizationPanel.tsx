@@ -1,16 +1,21 @@
 import type { QRStyle } from '@/lib/generators/types';
+import { getDictionary } from '@/i18n/utils';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
   style: QRStyle;
   onChange: (style: QRStyle) => void;
+  locale: Locale;
 }
 
-export function CustomizationPanel({ style, onChange }: Props) {
+export function CustomizationPanel({ style, onChange, locale }: Props) {
+  const dict = getDictionary(locale);
+  const t = (k: string) => dict[k] ?? k;
   return (
     <div className="customization-panel">
-      <h3>Customize</h3>
+      <h3>{t('customization.title')}</h3>
       <div className="row">
-        <label htmlFor="fg-color">Foreground</label>
+        <label htmlFor="fg-color">{t('customization.fg')}</label>
         <input
           id="fg-color"
           type="color"
@@ -19,7 +24,7 @@ export function CustomizationPanel({ style, onChange }: Props) {
         />
       </div>
       <div className="row">
-        <label htmlFor="bg-color">Background</label>
+        <label htmlFor="bg-color">{t('customization.bg')}</label>
         <input
           id="bg-color"
           type="color"
@@ -28,20 +33,20 @@ export function CustomizationPanel({ style, onChange }: Props) {
         />
       </div>
       <div className="row">
-        <label htmlFor="ec-level">Error correction</label>
+        <label htmlFor="ec-level">{t('customization.ec')}</label>
         <select
           id="ec-level"
           value={style.errorCorrection}
           onChange={(e) => onChange({ ...style, errorCorrection: e.target.value as QRStyle['errorCorrection'] })}
         >
-          <option value="L">L — Low (7%)</option>
-          <option value="M">M — Medium (15%)</option>
-          <option value="Q">Q — Quartile (25%)</option>
-          <option value="H">H — High (30%)</option>
+          <option value="L">{t('customization.ec.L')}</option>
+          <option value="M">{t('customization.ec.M')}</option>
+          <option value="Q">{t('customization.ec.Q')}</option>
+          <option value="H">{t('customization.ec.H')}</option>
         </select>
       </div>
       <div className="row">
-        <label htmlFor="margin">Margin (modules)</label>
+        <label htmlFor="margin">{t('customization.margin')}</label>
         <input
           id="margin"
           type="number"
@@ -52,7 +57,7 @@ export function CustomizationPanel({ style, onChange }: Props) {
         />
       </div>
       <div className="row">
-        <label htmlFor="logo-upload">Logo</label>
+        <label htmlFor="logo-upload">{t('customization.logo')}</label>
         <input
           id="logo-upload"
           type="file"
@@ -67,7 +72,7 @@ export function CustomizationPanel({ style, onChange }: Props) {
             reader.onload = () => {
               onChange({
                 ...style,
-                errorCorrection: 'H', // force H when logo present
+                errorCorrection: 'H',
                 logo: {
                   dataUrl: reader.result as string,
                   sizePercent: 20
@@ -81,7 +86,7 @@ export function CustomizationPanel({ style, onChange }: Props) {
       {style.logo && (
         <>
           <div className="row">
-            <label htmlFor="logo-size">Logo size (%)</label>
+            <label htmlFor="logo-size">{t('customization.logoSize')}</label>
             <input
               id="logo-size"
               type="number"
@@ -97,7 +102,7 @@ export function CustomizationPanel({ style, onChange }: Props) {
             />
           </div>
           <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.5rem' }}>
-            ⚠ Logo added — error correction auto-set to H for scannability.
+            {t('customization.logoWarning')}
           </div>
         </>
       )}
