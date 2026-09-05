@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getLocaleFromUrl } from '@/i18n/utils';
 
 const faqItems = [
   {
@@ -23,13 +24,15 @@ const faqItems = [
     answer: 'Static is more private: nothing is tracked by default. Dynamic QR services inherently log every scan (that\'s how their analytics work). For privacy-conscious use cases, static is the better choice.'
   }
 ];
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 <Base
   title="Static vs Dynamic QR Codes: What's the Difference?"
   description="Static or dynamic? Free or subscription? When each makes sense. Privacy and reliability trade-offs compared."
   schema="faq"
   faqItems={faqItems}
->
+ locale={locale}>
   <article class="blog-post">
     <div class="container">
       <header class="blog-header">
