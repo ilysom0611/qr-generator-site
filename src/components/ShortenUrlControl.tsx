@@ -23,7 +23,7 @@ export function ShortenUrlControl({ value, onShortenRequest, onCopy, disabled, l
       <button
         type="button"
         onClick={onShortenRequest}
-        disabled={disabled || value.status === 'shortening' || !value.longUrl}
+        disabled={disabled || value.status === 'shortening'}
       >
         {value.status === 'shortening' ? t('shorten.shortening') : t('shorten.button')}
       </button>
