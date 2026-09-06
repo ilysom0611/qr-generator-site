@@ -136,6 +136,7 @@ export function QRGenerator({ locale }: Props) {
                   onShortenRequest={handleShortenRequest}
                   onCopy={handleCopy}
                   disabled={!canDownload}
+                  locale={locale}
                 />
               )}
               <CustomizationPanel style={style} onChange={setStyle} locale={locale} />

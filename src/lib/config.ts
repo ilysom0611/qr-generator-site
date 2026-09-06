@@ -1,1 +1,2 @@
-export const SHORTENER_BASE_URL = 'https://s.qr-generator-site.pages.dev';
+/** Shortener is now same-origin via Pages Functions + KV (free tier). */
+export const SHORTENER_BASE_URL = '';

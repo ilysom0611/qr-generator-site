@@ -6,12 +6,13 @@ import Base from '../layouts/Base.astro';
   <section class="container" style="padding: 2rem 0;">
     <h1>Privacy Policy</h1>
     <h2>What we collect</h2>
-    <p><strong>Nothing about your QR code content.</strong> All generation happens in your browser. Your URLs, WiFi passwords, vCards, and other inputs never leave your device.</p>
+    <p><strong>Nothing about your QR code content by default.</strong> All generation happens in your browser. Your URLs, WiFi passwords, vCards, and other inputs never leave your device unless you explicitly use the optional URL shortener.</p>
     <h2>What we use</h2>
     <p>We use <strong>Cloudflare Web Analytics</strong>, which records aggregated page views without cookies or personal identifiers. We never see your IP address or fingerprint.</p>
-    <h2>Short URL Service</h2>
-    <p>If you choose to shorten a long URL using the "Shorten URL" button on the URL tab, we receive that long URL. We store the mapping (a randomly generated 6-character id pointing to your long URL) so that the short link works. We do not log your IP address, User-Agent, or Referer. The only data we collect for short links is a click count, which is incremented each time the short link is followed.</p>
-    <p>To request deletion of a short link, email us at the address on the <a href="/contact">Contact</a> page. We will remove the mapping from our database within 7 days. The QR tool itself remains 100% client-side: no QR content you generate is sent to us unless you explicitly click the "Shorten URL" button.</p>
+    <h2 id="short-url-service">Short URL Service (opt-in)</h2>
+    <p>The QR tool itself is <strong>100% client-side and requires no upload</strong>. The URL shortener is a separate, opt-in feature on the URL tab. <strong>Only when you click “Shorten URL”</strong> is that URL sent to our same-origin shortener (<code>/api/shorten</code>, Cloudflare Pages Functions + KV — free tier, same domain as this site).</p>
+    <p>We then store only <strong>a short ID (4–5 characters) → long URL mapping and a click count</strong>, so the short link <code>/s/&lt;id&gt;</code> can redirect. We do not log your IP address, User-Agent, or Referer. We apply a best-effort per-IP rate limit (about 20 requests per minute) to prevent abuse; the counter is kept in KV and expires automatically.</p>
+    <p>To request deletion of a short link, email us at the address on the <a href="/contact">Contact</a> page. We will remove the mapping from our database within 7 days. No other QR content you generate is ever sent to our servers.</p>
     <h2>Advertising</h2>
     <p>The site displays ads served by Google AdSense. Google may set cookies for ad personalization. You can opt out via <a href="https://adssettings.google.com">Google's ad settings</a> or use an ad blocker.</p>
     <h2>Contact</h2>

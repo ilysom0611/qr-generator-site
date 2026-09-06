@@ -1,3 +1,6 @@
+import type { Locale } from '@/i18n/config';
+import { getDictionary } from '@/i18n/utils';
+
 export type ShortenState =
   | { longUrl: string; shortUrl?: undefined; status: 'idle' }
   | { longUrl: string; shortUrl: string; status: 'shortened' }
@@ -9,9 +12,12 @@ interface Props {
   onShortenRequest: () => void;
   onCopy: () => void;
   disabled?: boolean;
+  locale: Locale;
 }
 
-export function ShortenUrlControl({ value, onShortenRequest, onCopy, disabled }: Props) {
+export function ShortenUrlControl({ value, onShortenRequest, onCopy, disabled, locale }: Props) {
+  const dict = getDictionary(locale);
+  const t = (k: string) => dict[k] ?? k;
   return (
     <div className="shorten-control">
       <button
@@ -19,19 +25,19 @@ export function ShortenUrlControl({ value, onShortenRequest, onCopy, disabled }:
         onClick={onShortenRequest}
         disabled={disabled || value.status === 'shortening' || !value.longUrl}
       >
-        {value.status === 'shortening' ? 'Shortening...' : 'Shorten URL'}
+        {value.status === 'shortening' ? t('shorten.shortening') : t('shorten.button')}
       </button>
 
       {value.status === 'shortened' && (
         <div className="shorten-result">
-          <label>Short URL</label>
+          <label>{t('shorten.resultLabel')}</label>
           <div className="shorten-result-row">
             <input type="text" readOnly value={value.shortUrl} />
             <button type="button" onClick={onCopy}>
-              Copy
+              {t('shorten.copy')}
             </button>
             <a href={value.shortUrl} target="_blank" rel="noopener noreferrer">
-              Open
+              {t('shorten.open')}
             </a>
           </div>
         </div>
@@ -44,8 +50,11 @@ export function ShortenUrlControl({ value, onShortenRequest, onCopy, disabled }:
       )}
 
       <p className="shorten-disclaimer">
-        Clicking Shorten sends the URL to our shortener service. We store the mapping to honor the
-        short link.
+        {t('shorten.disclaimer')}{' '}
+        <a href={`/${locale === 'en' ? '' : locale + '/'}privacy#short-url-service`.replace('//', '/')}>
+          {t('shorten.privacyLink')}
+        </a>
+        .
       </p>
     </div>
   );
