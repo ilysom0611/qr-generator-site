@@ -12,11 +12,6 @@ describe('payloadToString', () => {
       .toBe('https://example.com');
   });
 
-  it('returns text raw', () => {
-    expect(payloadToString({ type: 'text', text: 'hello world' }))
-      .toBe('hello world');
-  });
-
   it('formats WiFi string per spec', () => {
     expect(payloadToString({
       type: 'wifi', ssid: 'MyNet', password: 'secret', security: 'WPA', hidden: false

@@ -7,8 +7,6 @@ export function payloadToString(payload: QRPayload): string {
       if (/^https?:\/\//i.test(url)) return url;
       return `https://${url}`;
     }
-    case 'text':
-      return payload.text;
     case 'wifi': {
       const T = payload.security;
       const S = escapeWifi(payload.ssid);

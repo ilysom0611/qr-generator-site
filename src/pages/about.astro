@@ -10,5 +10,6 @@ import Base from '../layouts/Base.astro';
     <p>It's free because we believe useful web tools shouldn't require accounts or payment. The site is supported by unobtrusive advertising.</p>
     <h2>How it works</h2>
     <p>The QR code standard (ISO/IEC 18004) defines a way to encode text into a 2D pattern. The <a href="https://www.npmjs.com/package/qrcode">qrcode</a> library implements this in pure JavaScript. We render the result to a canvas, optionally composite your Logo, and let you download it.</p>
+    <p>We also offer a free URL shortener (powered by a small Cloudflare Worker + KV backend) that you can use directly from the URL tab in the tool above. The QR generation itself always stays 100% in your browser; the shortener is opt-in and only sees the URL when you click "Shorten URL".</p>
   </section>
 </Base>

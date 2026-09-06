@@ -19,7 +19,6 @@ export function InputForm({ type, payload, onChange, errors, locale }: Props) {
   return (
     <div className="input-form">
       {type === 'url' && <UrlFields payload={payload as Extract<QRPayload, { type: 'url' }>} onChange={onChange} errors={errors} t={t} />}
-      {type === 'text' && <TextFields payload={payload as Extract<QRPayload, { type: 'text' }>} onChange={onChange} errors={errors} t={t} />}
       {type === 'wifi' && <WifiFields payload={payload as Extract<QRPayload, { type: 'wifi' }>} onChange={onChange} errors={errors} t={t} />}
       {type === 'vcard' && <VcardFields payload={payload as Extract<QRPayload, { type: 'vcard' }>} onChange={onChange} errors={errors} t={t} />}
       {type === 'email' && <EmailFields payload={payload as Extract<QRPayload, { type: 'email' }>} onChange={onChange} errors={errors} t={t} />}
@@ -56,19 +55,6 @@ function UrlFields({ payload, onChange, errors, t }: { payload: Extract<QRPayloa
         placeholder={t('inputForm.url.placeholder')}
         value={payload.url}
         onChange={(e) => onChange({ type: 'url', url: e.target.value })}
-      />
-    </Field>
-  );
-}
-
-function TextFields({ payload, onChange, errors, t }: { payload: Extract<QRPayload, { type: 'text' }>; onChange: (p: QRPayload) => void; errors: FieldErrors; t: T }) {
-  return (
-    <Field label={t('inputForm.text.label')} error={errors.text}>
-      <textarea
-        rows={4}
-        placeholder={t('inputForm.text.placeholder')}
-        value={payload.text}
-        onChange={(e) => onChange({ type: 'text', text: e.target.value })}
       />
     </Field>
   );

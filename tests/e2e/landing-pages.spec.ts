@@ -8,8 +8,7 @@ const LANDING_PAGES = [
   '/email-qr-code',
   '/phone-qr-code',
   '/sms-qr-code',
-  '/location-qr-code',
-  '/text-qr-code'
+  '/location-qr-code'
 ];
 
 for (const path of LANDING_PAGES) {

@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 
 const faqItems = [
-  { question: 'What types of QR codes can I generate?', answer: 'URL, Text, WiFi, vCard, Email, Phone, SMS, and Location. All 8 types are free.' },
+  { question: 'What types of QR codes can I generate?', answer: 'URL, WiFi, vCard, Email, Phone, SMS, and Location. All 7 types are free.' },
   { question: 'Is this really free?', answer: 'Yes, completely free. No signup, no watermark, no limits.' },
   { question: 'How private is this?', answer: 'All generation happens in your browser. Your content is never uploaded to any server.' },
   { question: 'Which format should I download?', answer: 'PNG for photos/print, SVG for high-quality scaling, JPG for smaller file size.' },
@@ -16,20 +16,19 @@ const relatedTypes = [
   { slug: 'email-qr-code', label: 'Email QR Code' },
   { slug: 'phone-qr-code', label: 'Phone QR Code' },
   { slug: 'sms-qr-code', label: 'SMS QR Code' },
-  { slug: 'location-qr-code', label: 'Location QR Code' },
-  { slug: 'text-qr-code', label: 'Text QR Code' }
+  { slug: 'location-qr-code', label: 'Location QR Code' }
 ];
 
 ---
 <Base
-  title="Free QR Code Generator — 8 Types, 100% Private"
+  title="Free QR Code Generator — 7 Types, 100% Private"
   description="Generate free QR codes for URLs, WiFi, vCards, and more. 100% private, browser-based, no upload. No signup required."
   schema="faq"
   faqItems={faqItems}>
   <section class="landing-hero">
     <div class="container">
       <h1>Free QR Code Generator</h1>
-      <p>Generate any QR code in your browser. URL, WiFi, vCard, and 5 more types. Nothing uploaded, nothing tracked.</p>
+      <p>Generate any QR code in your browser. URL, WiFi, vCard, and 4 more types. Nothing uploaded, nothing tracked.</p>
       <a href="/#type=url" class="cta">Try the QR Code Generator</a>
     </div>
   </section>

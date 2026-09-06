@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { QRType, QRPayload, QRSpec, QRStyle } from '@/lib/generators/types';
 import { validatePayload } from '@/lib/validation';
+import { shortenUrl } from '@/lib/shorten-client';
+import { ShortenUrlControl, type ShortenState } from './ShortenUrlControl';
 import { getDictionary } from '@/i18n/utils';
 import type { Locale } from '@/i18n/config';
 import { TypePicker } from './TypePicker';
@@ -18,7 +20,6 @@ const DEFAULT_STYLE: QRStyle = {
 
 const DEFAULT_PAYLOADS: Record<QRType, QRPayload> = {
   url: { type: 'url', url: '' },
-  text: { type: 'text', text: '' },
   wifi: { type: 'wifi', ssid: '', password: '', security: 'WPA', hidden: false },
   vcard: { type: 'vcard', firstName: '', lastName: '', phone: '', email: '' },
   email: { type: 'email', to: '', subject: '', body: '' },
@@ -26,6 +27,8 @@ const DEFAULT_PAYLOADS: Record<QRType, QRPayload> = {
   sms: { type: 'sms', number: '', body: '' },
   location: { type: 'location', lat: 0, lng: 0 }
 };
+
+const IDLE_SHORTEN: ShortenState = { longUrl: '', status: 'idle' };
 
 interface Props {
   locale: Locale;
@@ -51,11 +54,21 @@ export function QRGenerator({ locale }: Props) {
   const [type, setType] = useState<QRType>(initialType);
   const [payload, setPayload] = useState<QRPayload>(DEFAULT_PAYLOADS[initialType]);
   const [style, setStyle] = useState<QRStyle>(DEFAULT_STYLE);
+  const [shorten, setShorten] = useState<ShortenState>(IDLE_SHORTEN);
 
   const isUnsupported = useMemo(() => {
     if (typeof window === 'undefined') return false;
     return !('createObjectURL' in URL) || !('Blob' in window);
   }, []);
+
+  useEffect(() => {
+    if (type !== 'url') return;
+    const url = (payload as { type: 'url'; url: string }).url;
+    if (shorten.status === 'idle') return;
+    if (shorten.longUrl !== url) {
+      setShorten(IDLE_SHORTEN);
+    }
+  }, [payload, type, shorten]);
 
   const spec: QRSpec = { type, payload, style };
 
@@ -63,6 +76,37 @@ export function QRGenerator({ locale }: Props) {
   const fieldErrors: Record<string, string> = {};
   if (!validation.ok) fieldErrors[validation.field] = formatError(dict, validation.error);
   const canDownload = validation.ok;
+
+  const handleShortenRequest = async () => {
+    if (type !== 'url') return;
+    const longUrl = (payload as { type: 'url'; url: string }).url;
+    if (!longUrl) return;
+    setShorten({ longUrl, status: 'shortening' });
+    const r = await shortenUrl(longUrl);
+    if (r.ok) {
+      setShorten({ longUrl, shortUrl: r.shortUrl, status: 'shortened' });
+      setPayload({ type: 'url', url: r.shortUrl });
+    } else {
+      const message =
+        r.error === 'timeout'
+          ? 'Shortener took too long. Try again.'
+          : r.error === 'network'
+            ? 'No connection. QR will encode the long URL.'
+            : r.error === 'validation'
+              ? r.message || 'Invalid URL.'
+              : 'Shortener is busy. Try again or use the long URL.';
+      setShorten({ longUrl, status: 'error', error: message });
+    }
+  };
+
+  const handleCopy = async () => {
+    if (shorten.status !== 'shortened') return;
+    try {
+      await navigator.clipboard.writeText(shorten.shortUrl);
+    } catch {
+      // clipboard may be unavailable in some contexts
+    }
+  };
 
   return (
     <div className="tool-page">
@@ -76,8 +120,24 @@ export function QRGenerator({ locale }: Props) {
         ) : (
           <div className="tool-grid">
             <div className="tool-section">
-              <TypePicker active={type} onChange={(t) => { setType(t); setPayload(DEFAULT_PAYLOADS[t]); }} locale={locale} />
+              <TypePicker
+                active={type}
+                onChange={(nt) => {
+                  setType(nt);
+                  setPayload(DEFAULT_PAYLOADS[nt]);
+                  setShorten(IDLE_SHORTEN);
+                }}
+                locale={locale}
+              />
               <InputForm type={type} payload={payload} onChange={setPayload} errors={fieldErrors} locale={locale} />
+              {type === 'url' && (
+                <ShortenUrlControl
+                  value={shorten}
+                  onShortenRequest={handleShortenRequest}
+                  onCopy={handleCopy}
+                  disabled={!canDownload}
+                />
+              )}
               <CustomizationPanel style={style} onChange={setStyle} locale={locale} />
             </div>
             <div className="tool-section">

@@ -20,11 +20,6 @@ export function validatePayload(payload: QRPayload): ValidationResult {
         return { ok: false, field: 'url', error: { key: 'validation.url.invalid' } };
       }
     }
-    case 'text':
-      if (!payload.text.trim()) {
-        return { ok: false, field: 'text', error: { key: 'validation.text.required' } };
-      }
-      return { ok: true };
     case 'wifi': {
       if (!payload.ssid.trim()) {
         return { ok: false, field: 'ssid', error: { key: 'validation.wifi.ssidRequired' } };

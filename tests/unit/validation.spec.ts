@@ -17,14 +17,6 @@ describe('validatePayload', () => {
     expect(r.ok).toBe(false);
   });
 
-  it('accepts non-empty text', () => {
-    expect(validatePayload({ type: 'text', text: 'anything' })).toEqual({ ok: true });
-  });
-
-  it('rejects empty text', () => {
-    expect(validatePayload({ type: 'text', text: '' }).ok).toBe(false);
-  });
-
   it('accepts valid WiFi', () => {
     expect(validatePayload({
       type: 'wifi', ssid: 'MyNet', password: 'secret', security: 'WPA', hidden: false

@@ -2,14 +2,7 @@ import { test, expect } from '@playwright/test';
 import * as fs from 'fs/promises';
 
 const TYPES: Array<{ id: string; setup: () => Promise<void> }> = [
-  { id: 'url', setup: async () => {} },
-  {
-    id: 'text',
-    setup: async () => {
-      await test.step('select text', async () => {});
-    }
-  }
-  // Expanded below with helper to fill per-type inputs
+  { id: 'url', setup: async () => {} }
 ];
 
 test.describe('tool smoke', () => {
@@ -28,23 +21,12 @@ test.describe('tool smoke', () => {
 
   test('generates SVG for WiFi type', async ({ page }) => {
     await page.goto('/#type=wifi');
-    // Field now uses htmlFor/id (Task 12.5 a11y fix), so getByLabel works.
     await page.getByLabel('SSID (network name)').fill('TestNet');
     await page.getByLabel('Password').fill('test123');
     const downloadPromise = page.waitForEvent('download');
     await page.getByRole('button', { name: 'Download SVG' }).click();
     const download = await downloadPromise;
     expect(download.suggestedFilename()).toMatch(/^qr-wifi-[a-z0-9]{6}\.svg$/);
-  });
-
-  test('generates JPG for Text type', async ({ page }) => {
-    await page.goto('/');
-    await page.getByRole('tab', { name: 'Text' }).click();
-    await page.getByRole('textbox', { name: 'Text' }).fill('hello world');
-    const downloadPromise = page.waitForEvent('download');
-    await page.getByRole('button', { name: 'Download JPG' }).click();
-    const download = await downloadPromise;
-    expect(download.suggestedFilename()).toMatch(/^qr-text-[a-z0-9]{6}\.jpg$/);
   });
 
   test('disables download when URL is invalid', async ({ page }) => {

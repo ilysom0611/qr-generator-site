@@ -1,10 +1,9 @@
 export type QRType =
-  | 'url' | 'text' | 'wifi' | 'vcard'
+  | 'url' | 'wifi' | 'vcard'
   | 'email' | 'phone' | 'sms' | 'location';
 
 export type QRPayload =
   | { type: 'url'; url: string }
-  | { type: 'text'; text: string }
   | { type: 'wifi'; ssid: string; password: string; security: 'WPA' | 'WEP' | 'nopass'; hidden: boolean }
   | { type: 'vcard'; firstName: string; lastName: string; phone: string; email: string; org?: string; url?: string }
   | { type: 'email'; to: string; subject?: string; body?: string }

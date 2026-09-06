@@ -17,9 +17,11 @@ export function QRPreview({ spec, locale }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    // Clear any previous error as soon as we start a new render attempt
+    setError(null);
     const handle = setTimeout(() => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
       qrToCanvas(canvas, spec.payload, spec.style)
         .then(async () => {
           if (spec.style.logo) {
@@ -34,10 +36,9 @@ export function QRPreview({ spec, locale }: Props) {
 
   return (
     <div className="preview-canvas-wrapper">
-      {error ? (
-        <div role="alert" style={{ color: 'var(--color-error)' }}>{error}</div>
-      ) : (
-        <canvas ref={canvasRef} aria-label={t('preview.ariaLabel')} />
+      <canvas ref={canvasRef} aria-label={t('preview.ariaLabel')} />
+      {error && (
+        <div role="alert" className="preview-error">{error}</div>
       )}
     </div>
   );
